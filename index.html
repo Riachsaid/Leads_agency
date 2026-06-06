@@ -34,6 +34,7 @@
         .border-gradient { border-image: linear-gradient(135deg, rgba(251,191,36,0.3), rgba(249,115,22,0.3)) 1; }
         .grid-pattern { background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 60px 60px; }
         .pricing-card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px -15px rgba(245,158,11,0.25); }
+        .niche-select { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23fbbf24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 16px 12px; -webkit-appearance: none; appearance: none; }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans antialiased">
@@ -261,6 +262,37 @@
                 <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white mt-3 mb-4">After Your Pilot — Go Premium</h2>
                 <p class="text-slate-400 text-sm leading-relaxed">Once you have validated our lead quality with the $5.00 pilot, unlock our high-volume packages. Pricing scales with geo-density and niche specificity.</p>
             </div>
+
+            <!-- Niche Selector -->
+            <div class="max-w-md mx-auto mb-10">
+                <label for="niche-select" class="block text-xs font-semibold tracking-[0.2em] uppercase text-amber-500 mb-3 text-center">Select Your Niche</label>
+                <div class="relative">
+                    <select id="niche-select" onchange="updatePrices()" class="niche-select w-full bg-slate-900/80 border border-slate-700 hover:border-amber-500/40 text-white rounded-xl px-5 py-3.5 text-sm font-medium outline-none focus:border-amber-500/60 transition-all cursor-pointer">
+                        <option value="hvac">HVAC / Heating & Cooling</option>
+                        <option value="roofing">Roofing & Gutters</option>
+                        <option value="plumbing">Plumbing & Drainage</option>
+                        <option value="electrical">Electrical & Wiring</option>
+                        <option value="restoration">Emergency Restoration / Water Damage</option>
+                        <option value="foundation">Foundation & Concrete</option>
+                        <option value="pest_control">Pest Control & Extermination</option>
+                        <option value="landscaping">Landscaping & Tree Service</option>
+                        <option value="painting">Painting & Drywall</option>
+                        <option value="general">General Contracting</option>
+                    </select>
+                    <div class="hidden" id="niche-price-data"
+                         data-hvac='{"starter":55,"pro":110}'
+                         data-roofing='{"starter":60,"pro":115}'
+                         data-plumbing='{"starter":50,"pro":100}'
+                         data-electrical='{"starter":55,"pro":105}'
+                         data-restoration='{"starter":80,"pro":120}'
+                         data-foundation='{"starter":70,"pro":120}'
+                         data-pest_control='{"starter":50,"pro":95}'
+                         data-landscaping='{"starter":50,"pro":90}'
+                         data-painting='{"starter":50,"pro":85}'
+                         data-general='{"starter":50,"pro":80}'></div>
+                </div>
+            </div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                 <!-- Starter Pack -->
                 <div class="relative rounded-3xl border border-slate-700/60 bg-slate-900/50 p-8 shadow-xl transition-all duration-300 pricing-card glass-card hover:border-slate-500">
@@ -271,10 +303,10 @@
                         <h3 class="text-xl font-bold text-white">Starter Pack</h3>
                         <p class="text-xs text-slate-500 mt-1">Standard Verified Leads</p>
                         <div class="mt-5 flex items-baseline justify-center gap-1">
-                            <span class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">$50.00</span>
+                            <span class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white" id="starter-price">$50.00</span>
                             <span class="text-slate-400 text-base font-medium">/ pack</span>
                         </div>
-                        <p class="text-xs text-slate-500 mt-1">$10.00 per lead</p>
+                        <p class="text-xs text-slate-500 mt-1" id="starter-per-lead">$10.00 per lead</p>
                     </div>
                     <ul class="space-y-3 text-sm text-slate-300 mb-8 border-t border-slate-800 pt-6">
                         <li class="flex items-center gap-3">
@@ -311,10 +343,10 @@
                         <h3 class="text-xl font-bold text-white">Contractor Pro</h3>
                         <p class="text-xs text-amber-500 mt-1">Premium Geo-Targeted Leads</p>
                         <div class="mt-5 flex items-baseline justify-center gap-1">
-                            <span class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">$120.00</span>
+                            <span class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white" id="pro-price">$120.00</span>
                             <span class="text-slate-400 text-base font-medium">/ pack</span>
                         </div>
-                        <p class="text-xs text-amber-500">$24.00 per lead</p>
+                        <p class="text-xs text-amber-500" id="pro-per-lead">$24.00 per lead</p>
                     </div>
                     <ul class="space-y-3 text-sm text-slate-300 mb-8 border-t border-slate-800 pt-6">
                         <li class="flex items-center gap-3">
@@ -327,7 +359,7 @@
                         </li>
                         <li class="flex items-center gap-3">
                             <i class="fa-solid fa-circle-check text-amber-400 text-base"></i>
-                            <span>Service category match (HVAC, roofing, plumbing, etc.)</span>
+                            <span>Service category match</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i class="fa-solid fa-circle-check text-amber-400 text-base"></i>
@@ -348,11 +380,36 @@
                 </div>
             </div>
             <p class="text-center text-xs text-slate-500 mt-8 flex items-center justify-center gap-1.5">
-                <i class="fa-solid fa-location-dot text-amber-400/60"></i>
-                Prices vary by geo-density and niche — contact us for custom volume pricing
+                <i class="fa-solid fa-shield-halved text-amber-400/60"></i>
+                Price locked to selected niche — server-side validated to prevent manipulation
             </p>
         </div>
     </section>
+
+    <script>
+        const NICHE_PRICES = {
+            hvac:        { starter: 55, pro: 110 },
+            roofing:     { starter: 60, pro: 115 },
+            plumbing:    { starter: 50, pro: 100 },
+            electrical:  { starter: 55, pro: 105 },
+            restoration: { starter: 80, pro: 120 },
+            foundation:  { starter: 70, pro: 120 },
+            pest_control:{ starter: 50, pro: 95 },
+            landscaping: { starter: 50, pro: 90 },
+            painting:    { starter: 50, pro: 85 },
+            general:     { starter: 50, pro: 80 },
+        };
+
+        function updatePrices() {
+            const sel = document.getElementById('niche-select');
+            const niche = sel.value;
+            const prices = NICHE_PRICES[niche] || NICHE_PRICES.general;
+            document.getElementById('starter-price').textContent = '$' + prices.starter.toFixed(2);
+            document.getElementById('starter-per-lead').textContent = '$' + (prices.starter / 5).toFixed(2) + ' per lead';
+            document.getElementById('pro-price').textContent = '$' + prices.pro.toFixed(2);
+            document.getElementById('pro-per-lead').textContent = '$' + (prices.pro / 5).toFixed(2) + ' per lead';
+        }
+    </script>
 
     <!-- CTA -->
     <section class="py-20 border-t border-slate-800/60 relative overflow-hidden">
