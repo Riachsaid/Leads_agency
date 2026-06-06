@@ -1326,7 +1326,7 @@
         revealElements.forEach((el) => revealObserver.observe(el));
 
         // Fallback: if observer hasn't fired after 2s, show all reveal elements
-        let revealTimer = setTimeout(function fallbackReveal() {
+        setTimeout(function fallbackReveal() {
           revealElements.forEach((el) => {
             if (!el.classList.contains('visible')) {
               el.classList.add('visible');
