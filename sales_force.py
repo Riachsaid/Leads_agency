@@ -53,6 +53,27 @@ PURGE_ARCHIVE = f"{ROOT}/.purge_archive"
 INVOICE_DIR = f"{ROOT}/invoices"
 
 # ── Constants ───────────────────────────────────────────────────────────
+# ═══════════════════════════════════════════════════════════════════════
+#  DIRECT CRYPTO WALLET BLOCK
+#  No external payment gateways. 100% direct B2B Stablecoin payments.
+#  USDT (TRC-20) + Binance Pay — hardcoded, no API dependencies.
+# ═══════════════════════════════════════════════════════════════════════
+CRYPTO_WALLETS = {
+    "usdt_trc20": {
+        "label": "USDT (TRC-20)",
+        "address": "TK3PvmqAWPtrkVQdSpXt5MXJDRQjSKXT5c",
+        "network": "TRC-20",
+        "note": "Send ONLY via TRC-20 network. Transfers on other networks will be permanently lost.",
+    },
+    "binance_pay": {
+        "label": "Binance Pay ID",
+        "address": "YOUR_BINANCE_PAY_ID_HERE",
+        "network": "Binance Pay",
+        "note": "Contact us for a Binance Pay invoice link.",
+    },
+}
+# ═══════════════════════════════════════════════════════════════════════
+
 ELITE_COUNT = 10
 
 # Package definitions
@@ -651,7 +672,7 @@ def generate_crypto_invoice(contractor_name: str, lead: dict, settings: dict, pa
     pkg_label = PACKAGES.get(package, PACKAGES["trial"])["label"]
     filename = f"{invoice_id}_{pkg_label.replace(' ', '_')}_{contractor_name.replace(' ', '_')}.pdf"
     filepath = f"{INVOICE_DIR}/{filename}"
-    address = settings.get("usdt_trc20_address", "NOT SET")
+    address = CRYPTO_WALLETS["usdt_trc20"]["address"]
 
     doc = SimpleDocTemplate(
         filepath, pagesize=letter,
@@ -810,7 +831,7 @@ def generate_crypto_invoice(contractor_name: str, lead: dict, settings: dict, pa
         except Exception:
             logger.warning("  QR code generation failed — continuing without QR")
     # Wallet address displayed clearly below the QR
-    elements.append(Paragraph("Scan with Binance, RedotPay, or any TRC-20 wallet", styles["SubTitle"]))
+    elements.append(Paragraph("Scan with any TRC-20 compatible wallet", styles["SubTitle"]))
     elements.append(Spacer(1, 4))
     elements.append(Paragraph(address, styles["MonoAddress"]))
     elements.append(Spacer(1, 12))
@@ -818,12 +839,12 @@ def generate_crypto_invoice(contractor_name: str, lead: dict, settings: dict, pa
     # ── Instructions ──
     elements.append(Paragraph("INSTRUCTIONS", styles["SectionHeader"]))
     elements.append(Paragraph(
-        "1. Open your Binance, RedotPay, or TRC-20 compatible wallet app.<br/>"
+        "1. Open your TRC-20 compatible wallet (Binance, RedotPay, Trust Wallet, etc.).<br/>"
         "2. Scan the QR code above or copy the wallet address.<br/>"
         f"3. Send exactly <b>{amount:.2f} USDT (TRC-20)</b> to the address shown above.<br/>"
         "4. <b>IMPORTANT:</b> Verify the network is set to <b>TRC-20</b> before confirming.<br/>"
-        "5. After sending, reply to the invoice email with your <b>Transaction Hash (TXID)</b> "
-        "for instant verification and lead release.",
+        "5. After sending, reply to this email with your <b>Transaction Hash (TXID)</b> "
+        "or payment screenshot for manual verification and instant lead release.",
         styles["BodyText2"],
     ))
     elements.append(Spacer(1, 8))
@@ -841,12 +862,13 @@ def generate_crypto_invoice(contractor_name: str, lead: dict, settings: dict, pa
 
 def build_payment_instruction(contractor_name: str, settings: dict, package: str = "trial", amount: float = 5.0, invoice_path: str = "") -> str:
     """Build the USDT TRC20 payment instruction message with TXID prompt.
-    Supports dynamic package name and amount."""
+    Direct crypto only — no external gateways. Supports dynamic package name and amount."""
     pkg_info = PACKAGES.get(package, PACKAGES["trial"])
     pkg_label = pkg_info["label"]
     is_trial = pkg_info["is_trial"]
-    address = settings.get("usdt_trc20_address", "NOT SET")
-    note = settings.get("payment_note", "TRC20 network only.")
+    wallet = CRYPTO_WALLETS["usdt_trc20"]
+    address = wallet["address"]
+    note = settings.get("payment_note", wallet["note"])
     invoice_line = f"\nA Professional Crypto Service Invoice has been attached to this email ({os.path.basename(invoice_path)}).\n" if invoice_path else ""
 
     if is_trial:
@@ -863,16 +885,19 @@ def build_payment_instruction(contractor_name: str, settings: dict, package: str
     return (
         f"Hi {contractor_name},\n\n"
         f"Excellent — you are confirmed for the {pkg_label}.\n\n"
+        f"DIRECT CRYPTO PAYMENT — NO EXTERNAL GATEWAYS.\n"
+        f"We accept direct B2B Stablecoin payments for instant service activation.\n\n"
         f"Please send {amount:.2f} USDT (TRC-20) to the address below. "
         f"Once confirmed, I will release the lead(s) to you immediately.\n\n"
-        f"Wallet Address: {address}\n"
-        f"Network: TRC-20 (USDT)\n"
-        f"Package: {pkg_label}\n"
-        f"Amount: {amount:.2f} USDT\n\n"
-        f"Important: {note}\n\n"
+        f"  Network:     {wallet['network']}\n"
+        f"  Currency:    {wallet['label']}\n"
+        f"  Address:     {address}\n"
+        f"  Package:     {pkg_label}\n"
+        f"  Amount:      {amount:.2f} USDT\n\n"
+        f"  IMPORTANT: {wallet['note']}\n\n"
         f"{invoice_line}"
-        f"After sending the payment, please reply to this email with your "
-        f"Transaction Hash (TXID) so we can verify instantly and release the lead(s).\n\n"
+        f"After sending, reply to this email with your Transaction Hash (TxID) "
+        f"or payment screenshot for manual verification and instant lead release.\n\n"
         f"{post_payment}\n\n"
         f"Best,\n"
         f"US Lead Dispatch"
