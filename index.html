@@ -1650,23 +1650,6 @@
         });
       });
 
-      // ---- SMOOTH SCROLL FOR NAV (ALWAYS runs — highest priority) ----
-      try {
-        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-          anchor.addEventListener('click', function(e) {
-            var href = this.getAttribute('href');
-            if (href === '#' || !href) return;
-            e.preventDefault();
-            var target = document.querySelector(href);
-            if (target) {
-              var rect = target.getBoundingClientRect();
-              var offset = window.scrollY + rect.top - 80;
-              window.scrollTo({ top: offset, behavior: 'smooth' });
-            }
-          });
-        });
-      } catch(e) { console.warn('[Nav]', e); }
-
       // ---- INVOICE GENERATOR (safe) ----
       safe(function() {
         var invClient = document.getElementById('invClient');
