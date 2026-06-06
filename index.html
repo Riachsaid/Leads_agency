@@ -11,11 +11,6 @@
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com">
   </script>
-  <!-- jsPDF for Invoice Generator -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
-  </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js">
-  </script>
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -165,7 +160,6 @@
       pointer-events: none;
       z-index: 0;
       overflow: hidden;
-      isolation: isolate;
     }
     .star {
       position: absolute;
@@ -1019,7 +1013,7 @@
   <!-- ============================================================ -->
   <!-- CHANGELY FIAT-ON-RAMP WIDGET                                 -->
   <!-- ============================================================ -->
-  <section class="relative py-24 sm:py-32 bg-gradient-to-b from-transparent via-slate-900/40 to-transparent overflow-hidden" id="buy-crypto">
+  <section class="relative py-24 sm:py-32 bg-gradient-to-b from-transparent via-slate-900/40 to-transparent" id="buy-crypto">
     <!-- Decorative glow -->
     <div class="absolute top-1/2 left-1/4 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
     <div class="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-ice-500/5 rounded-full blur-3xl pointer-events-none"></div>
@@ -1034,14 +1028,13 @@
       </div>
 
       <div class="flex justify-center reveal" style="transition-delay:0.1s">
-        <div class="w-full max-w-[500px] rounded-2xl bg-slate-900/70 backdrop-blur-sm border border-slate-700/50 shadow-2xl shadow-black/40 overflow-hidden transition-all duration-300 hover:border-emerald-700/30 hover:shadow-emerald-500/5">
+        <div class="w-full max-w-[500px] rounded-2xl bg-slate-900/70 backdrop-blur-sm border border-slate-700/50 shadow-2xl shadow-black/40 transition-all duration-300 hover:border-emerald-700/30 hover:shadow-emerald-500/5">
           <iframe
-            src="https://widget.changelly.com?from=usd&to=usdt&amount=100&fromDefault=usd&toDefault=usdt&merchant_id=2xqhrdsf1ttl0fli&v=3&type=no-rev-share&color=0d1117&headerId=1&logo=hide&buyButtonTextId=1"
+            src="https://widget.changelly.com?from=usd&to=usdt&amount=100&fromDefault=usd&toDefault=usdt&merchant_id=2xqhrdsf1ttl0fli&v=3&type=no-rev-share&color=%230d1117&headerId=1&logo=hide&buyButtonTextId=1"
             class="w-full"
             style="height: 660px; display: block; border: 0; background: transparent;"
             title="Buy USDT with Credit Card via Changelly"
             allow="camera; microphone; payment; clipboard-read; clipboard-write"
-            loading="lazy"
             referrerpolicy="strict-origin-when-cross-origin">
           </iframe>
         </div>
@@ -1813,6 +1806,10 @@
 
       downloadBtn.addEventListener('click', function() {
         if (!generated || !lastData) return;
+        if (typeof window.jspdf === 'undefined' || typeof window.jspdf.jsPDF !== 'function') {
+          alert('PDF library loading. Please try again in a moment.');
+          return;
+        }
 
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF({ unit: 'mm', format: 'a4' });
@@ -1933,6 +1930,12 @@
       });
 
     })();
+  </script>
+
+  <!-- Deferred jsPDF for Invoice Generator (non-blocking) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js">
   </script>
 </body>
 </html>
