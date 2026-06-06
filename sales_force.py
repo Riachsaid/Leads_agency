@@ -587,13 +587,14 @@ def _load_smtp_config() -> dict:
 
 
 def send_email(recipient: str, subject: str, body: str, attachment: str = "") -> bool:
-    """Send email via SMTP, optionally with a PDF attachment. Returns True on success."""
+    """Send email via SMTP with anti-spam headers. Returns True on success."""
     if not recipient:
         return False
     config = _load_smtp_config()
     if not config["user"] or not config["pass"]:
         logger.warning("  SMTP not configured — skipping email to %s", recipient)
         return False
+    from email.utils import formataddr, make_msgid, formatdate
     try:
         if attachment and os.path.exists(attachment):
             msg = MIMEMultipart()
@@ -602,18 +603,21 @@ def send_email(recipient: str, subject: str, body: str, attachment: str = "") ->
                 part = MIMEBase("application", "pdf")
                 part.set_payload(f.read())
             encoders.encode_base64(part)
-            part.add_header(
-                "Content-Disposition",
-                f'attachment; filename="{os.path.basename(attachment)}"',
-            )
+            part.add_header("Content-Disposition", f'attachment; filename="{os.path.basename(attachment)}"')
             msg.attach(part)
         else:
             msg = MIMEText(body, "plain", "utf-8")
         msg["Subject"] = subject
-        msg["From"] = f'{config["name"]} <{config["sender"]}>'
+        msg["From"] = formataddr((config["name"], config["sender"]))
         msg["To"] = recipient
+        msg["Message-ID"] = make_msgid(domain=config["sender"].split("@")[-1] if "@" in config["sender"] else "gmail.com")
+        msg["Date"] = formatdate(localtime=True)
+        msg["Precedence"] = "bulk"
+        msg["Auto-Submitted"] = "auto-generated"
+        msg["X-Mailer"] = "US Lead Dispatch"
         context = ssl.create_default_context()
         with smtplib.SMTP(config["host"], config["port"], timeout=15) as server:
+            server.set_debuglevel(0)
             server.starttls(context=context)
             server.login(config["user"], config["pass"])
             server.sendmail(config["sender"], [recipient], msg.as_string())
