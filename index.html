@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ApexLeads AI | Premium B2B Lead Generation for US Contractors</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+        }
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+        }
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes slide-up {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+        .animate-gradient { background-size: 200% 200%; animation: gradient-shift 8s ease infinite; }
+        .animate-slide-up { animation: slide-up 0.8s ease-out forwards; }
+        .glass-card { backdrop-filter: blur(16px); }
+        .hero-gradient { background: radial-gradient(ellipse 80% 60% at 50% -20%, rgba(245,158,11,0.15) 0%, transparent 60%), radial-gradient(ellipse 50% 40% at 80% 20%, rgba(251,146,60,0.1) 0%, transparent 50%), radial-gradient(ellipse 40% 50% at 20% 80%, rgba(251,191,36,0.08) 0%, transparent 50%), #0f172a; }
+        .text-gradient { background: linear-gradient(135deg, #fbbf24, #f97316); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .border-gradient { border-image: linear-gradient(135deg, rgba(251,191,36,0.3), rgba(249,115,22,0.3)) 1; }
+        .grid-pattern { background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 60px 60px; }
+        .pricing-card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px -15px rgba(245,158,11,0.25); }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased">
+
+    <!-- Nav -->
+    <header class="fixed top-0 inset-x-0 z-50 border-b border-slate-800/60 bg-slate-950/70 backdrop-blur-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg shadow-amber-500/20">
+                    <i class="fa-solid fa-bolt text-slate-950 text-sm"></i>
+                </div>
+                <span class="text-lg font-bold tracking-tight"><span class="text-gradient">Apex</span><span class="text-white">Leads</span><span class="text-amber-500"> AI</span></span>
+            </div>
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
+                <a href="#features" class="hover:text-amber-400 transition-colors">Features</a>
+                <a href="#geo" class="hover:text-amber-400 transition-colors">Geo-Targeting</a>
+                <a href="#pricing" class="hover:text-amber-400 transition-colors">Pricing</a>
+                <a href="#contact" class="hover:text-amber-400 transition-colors">Contact</a>
+            </nav>
+            <a href="#pricing" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 px-5 py-2.5 rounded-xl text-sm font-bold transition-all shadow-lg shadow-amber-500/25">Get Pilot Access</a>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero-gradient min-h-screen flex items-center relative overflow-hidden pt-16">
+        <div class="absolute inset-0 grid-pattern pointer-events-none"></div>
+        <div class="absolute top-1/4 left-1/4 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl animate-pulse-glow pointer-events-none"></div>
+        <div class="absolute bottom-1/3 right-1/4 w-96 h-96 bg-orange-500/8 rounded-full blur-3xl animate-pulse-glow pointer-events-none" style="animation-delay: 1.5s;"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber-400/3 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="lg:w-3/5 animate-slide-up">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20 mb-6">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                    Live — Autonomous Lead Engine v2.4
+                </div>
+                <h1 class="text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1] mb-6">
+                    High-Intent B2B Leads for<br />
+                    <span class="text-gradient">US Contractors</span>
+                </h1>
+                <p class="text-lg text-slate-400 max-w-xl mb-10 leading-relaxed">
+                    Stop wasting ad spend on cold traffic. Our autonomous AI scrapes, filters, and delivers <span class="text-slate-200 font-medium">verified, geo-pinned service leads</span> directly to your CRM — fully compliant with US B2B data standards.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#pricing" class="bg-slate-100 hover:bg-white text-slate-950 px-7 py-3.5 rounded-xl font-bold transition-all text-center shadow-xl">Start Pilot — $5.00</a>
+                    <a href="#features" class="border border-slate-700 hover:border-slate-500 bg-slate-800/30 px-7 py-3.5 rounded-xl font-medium text-center transition-all flex items-center justify-center gap-2">
+                        Watch Demo <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+                <div class="mt-10 flex items-center gap-6 text-xs text-slate-500">
+                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-shield-check text-emerald-400"></i> SOC2-Inspired Ops</span>
+                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-database text-amber-400"></i> 12k+ Leads Delivered</span>
+                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-clock text-amber-400"></i> Real-Time Pipeline</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Scraper Features -->
+    <section id="features" class="py-24 border-t border-slate-800/60 bg-slate-950 relative">
+        <div class="absolute inset-0 bg-gradient-to-b from-amber-500/3 to-transparent pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-semibold tracking-[0.2em] uppercase text-amber-500">Core Platform</span>
+                <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white mt-3 mb-4">AI-Powered Lead Scraper Engine</h2>
+                <p class="text-slate-400 text-sm leading-relaxed">We deploy purpose-built crawlers that index high-intent service listings across the US market. Every lead is verified, enriched, and formatted for instant outreach.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                <div class="group p-8 rounded-2xl bg-slate-900/50 border border-slate-800/60 hover:border-amber-500/30 transition-all duration-500 glass-card">
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 flex items-center justify-center text-amber-400 text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Autonomous Crawlers</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">24/7 cloud daemons scrape contractor directories, review platforms, and local business indexes — extracting only verified, high-intent profiles.</p>
+                </div>
+                <div class="group p-8 rounded-2xl bg-slate-900/50 border border-slate-800/60 hover:border-amber-500/30 transition-all duration-500 glass-card">
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 flex items-center justify-center text-amber-400 text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">AI Enrichment Layer</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">LLM-powered contact extraction validates phone numbers, emails, service areas, and business descriptions with 94%+ accuracy.</p>
+                </div>
+                <div class="group p-8 rounded-2xl bg-slate-900/50 border border-slate-800/60 hover:border-amber-500/30 transition-all duration-500 glass-card">
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 flex items-center justify-center text-amber-400 text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-file-export"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">CRM-Ready Export</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Clean CSV/JSON exports with deduplicated records, standardized formatting, and direct integration with HubSpot, Salesforce, and Google Sheets.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Geo-Targeted Filtering -->
+    <section id="geo" class="py-24 border-t border-slate-800/60 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="lg:flex lg:items-center lg:gap-16">
+                <div class="lg:w-1/2 mb-12 lg:mb-0">
+                    <span class="text-xs font-semibold tracking-[0.2em] uppercase text-amber-500">Precision Targeting</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white mt-3 mb-4">Geo-Pinned <span class="text-gradient">Lead Filtering</span></h2>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">Every lead includes verified city, state, ZIP code, and service category metadata. Our filtering system lets you zero in on the exact markets you serve — no wasted outreach.</p>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-3">
+                            <div class="w-6 h-6 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0 mt-0.5">
+                                <i class="fa-solid fa-check text-emerald-400 text-xs"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-white">City & State Filtering</h4>
+                                <p class="text-xs text-slate-500">Target leads by city, county, or state. Perfect for local service contractors.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-6 h-6 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0 mt-0.5">
+                                <i class="fa-solid fa-check text-emerald-400 text-xs"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-white">Service Category Match</h4>
+                                <p class="text-xs text-slate-500">Filter by trade — HVAC, roofing, plumbing, electrical, restoration, and more.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-6 h-6 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0 mt-0.5">
+                                <i class="fa-solid fa-check text-emerald-400 text-xs"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-white">ZIP Code Radius</h4>
+                                <p class="text-xs text-slate-500">Narrow to a specific ZIP or radius. Ideal for emergency response dispatch.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-3xl blur-2xl"></div>
+                        <div class="relative bg-slate-900/80 border border-slate-800/60 rounded-2xl p-8 glass-card">
+                            <div class="flex items-center gap-2 mb-6">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                <span class="ml-2 text-xs text-slate-500">lead-filter — live</span>
+                            </div>
+                            <pre class="text-xs text-slate-400 font-mono leading-relaxed">
+<span class="text-emerald-400">$</span> apexleads filter --city "Houston" --state "TX" \
+  --category "HVAC" --radius 50
+
+<span class="text-amber-400">[✓]</span> Found 23 leads in Houston, TX (HVAC)
+<span class="text-amber-400">[✓]</span> 21 verified phone numbers
+<span class="text-amber-400">[✓]</span> 18 active service requests
+<span class="text-amber-400">[✓]</span> Avg response time: 4.2 min
+
+<span class="text-slate-500">// Ready for CSV export</span>
+<span class="text-white">Exporting to leads_houston_hvac_2026-06-06.csv</span></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="py-24 border-t border-slate-800/60 bg-slate-950 relative">
+        <div class="absolute inset-0 bg-gradient-to-b from-amber-500/3 to-transparent pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-semibold tracking-[0.2em] uppercase text-amber-500">Pricing</span>
+                <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white mt-3 mb-4">Zero-Risk Pilot Access</h2>
+                <p class="text-slate-400 text-sm leading-relaxed">Test our live data delivery system with a single, verified contractor lead. No subscriptions. No commitment.</p>
+            </div>
+            <div class="max-w-lg mx-auto">
+                <div class="relative rounded-3xl border-2 border-amber-500/40 bg-slate-900/60 p-8 sm:p-10 shadow-2xl transition-all duration-300 pricing-card glass-card">
+                    <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 px-5 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest shadow-lg">
+                        Exclusive Pilot Package
+                    </div>
+                    <div class="text-center mb-8 mt-4">
+                        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-6">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                            Limited Availability
+                        </div>
+                        <div class="flex items-center justify-center gap-1">
+                            <span class="text-5xl sm:text-6xl font-extrabold tracking-tight text-white">$5.00</span>
+                            <span class="text-slate-400 text-lg font-medium">/ lead</span>
+                        </div>
+                        <p class="text-slate-500 text-xs mt-2">One-time payment — no recurring charges</p>
+                    </div>
+                    <ul class="space-y-4 text-sm text-slate-300 mb-8 border-t border-slate-800 pt-6">
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-circle-check text-amber-400 text-lg"></i>
+                            <span><span class="text-white font-medium">1 Live, Exclusive Contractor Lead</span> — real, verified, ready to contact</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-circle-check text-amber-400 text-lg"></i>
+                            <span><span class="text-white font-medium">Strict Geo-Filtering</span> — city, state, ZIP, or radius</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-circle-check text-amber-400 text-lg"></i>
+                            <span><span class="text-white font-medium">Verified Contact Data</span> — direct phone, email, business name</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-circle-check text-amber-400 text-lg"></i>
+                            <span><span class="text-white font-medium">Automated Invoice</span> — PDF invoice emailed to you</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-circle-check text-amber-400 text-lg"></i>
+                            <span><span class="text-white font-medium">CRM-Ready CSV Export</span> — compatible with all major platforms</span>
+                        </li>
+                    </ul>
+                    <button class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-bold py-3.5 px-4 rounded-xl transition-all shadow-lg shadow-amber-500/20 text-sm">
+                        Acquire Pilot Lead — $5.00
+                    </button>
+                    <p class="text-center text-xs text-slate-500 mt-4 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-lock text-amber-400/60"></i>
+                        Secure merchant payment via Binance Pay / Credit Card
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-20 border-t border-slate-800/60 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-amber-500/5 to-orange-500/5 pointer-events-none"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
+            <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-4">Ready to Close More Deals?</h2>
+            <p class="text-slate-400 text-sm max-w-2xl mx-auto mb-8">Join 40+ US contractors who rely on ApexLeads AI for their weekly lead pipeline. Get your first verified lead today.</p>
+            <a href="#pricing" class="inline-flex items-center gap-2 bg-slate-100 hover:bg-white text-slate-950 px-7 py-3.5 rounded-xl font-bold transition-all shadow-xl">
+                Start Your Pilot <i class="fa-solid fa-arrow-right text-sm"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="border-t border-slate-800/60 bg-slate-950 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center">
+                        <i class="fa-solid fa-bolt text-slate-950 text-xs"></i>
+                    </div>
+                    <span class="text-sm font-bold"><span class="text-gradient">Apex</span>Leads AI</span>
+                </div>
+                <div class="flex flex-wrap justify-center gap-x-8 gap-y-2 text-xs text-slate-500">
+                    <span>&copy; 2026 ApexLeads AI. All rights reserved.</span>
+                    <a href="#" class="hover:text-amber-400 transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-amber-400 transition-colors">Terms of Service</a>
+                    <span class="flex items-center gap-1.5">
+                        <i class="fa-solid fa-envelope text-amber-400/60"></i>
+                        support@apexleads.ai
+                    </span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
