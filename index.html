@@ -1248,66 +1248,78 @@
     (function() {
       'use strict';
 
-      // ---- STAR FIELD ----
-      const starField = document.getElementById('starField');
-      for (let i = 0; i < 120; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        star.style.left = Math.random() * 100 + '%';
-        star.style.top = Math.random() * 100 + '%';
-        star.style.width = (Math.random() * 2.5 + 1) + 'px';
-        star.style.height = star.style.width;
-        star.style.setProperty('--duration', (Math.random() * 4 + 2) + 's');
-        star.style.animationDelay = Math.random() * 5 + 's';
-        starField.appendChild(star);
+      // ---- DEFENSIVE WRAPPER: any single error won't kill event listeners ----
+      function safe(fn) {
+        try { return fn(); } catch(e) { console.warn('[Safe]', e); }
       }
 
-      // ---- MOBILE MENU ----
-      const menuToggle = document.getElementById('menuToggle');
-      const mobileMenu = document.getElementById('mobileMenu');
-      menuToggle.addEventListener('click', () => {
-        mobileMenu.classList.toggle('open');
+      // ---- STAR FIELD ----
+      safe(function() {
+        const starField = document.getElementById('starField');
+        if (!starField) return;
+        for (let i = 0; i < 120; i++) {
+          const star = document.createElement('div');
+          star.className = 'star';
+          star.style.left = Math.random() * 100 + '%';
+          star.style.top = Math.random() * 100 + '%';
+          star.style.width = (Math.random() * 2.5 + 1) + 'px';
+          star.style.height = star.style.width;
+          star.style.setProperty('--duration', (Math.random() * 4 + 2) + 's');
+          star.style.animationDelay = Math.random() * 5 + 's';
+          starField.appendChild(star);
+        }
       });
-      // Close on link click
-      mobileMenu.querySelectorAll('a').forEach((link) => {
-        link.addEventListener('click', () => {
-          mobileMenu.classList.remove('open');
+
+      // ---- MOBILE MENU ----
+      safe(function() {
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (!menuToggle || !mobileMenu) return;
+        menuToggle.addEventListener('click', function() {
+          mobileMenu.classList.toggle('open');
+        });
+        mobileMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            mobileMenu.classList.remove('open');
+          });
         });
       });
 
       // ---- COUNTDOWN TIMER ----
-      // Set countdown to a date ~12 days from now (June 2026 is typical)
-      const targetDate = new Date();
-      targetDate.setDate(targetDate.getDate() + 12);
-      targetDate.setHours(targetDate.getHours() + 18);
-      targetDate.setMinutes(targetDate.getMinutes() + 42);
+      safe(function() {
+        const els = ['countdownDays','countdownHours','countdownMinutes','countdownSeconds'];
+        if (!els.every(function(id) { return document.getElementById(id); })) return;
+        const targetDate = new Date();
+        targetDate.setDate(targetDate.getDate() + 12);
+        targetDate.setHours(targetDate.getHours() + 18);
+        targetDate.setMinutes(targetDate.getMinutes() + 42);
 
-      function updateCountdown() {
-        const now = new Date();
-        let diff = targetDate - now;
-        if (diff < 0) diff = 0;
-
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-        document.getElementById('countdownDays').textContent = String(days).padStart(2, '0');
-        document.getElementById('countdownHours').textContent = String(hours).padStart(2, '0');
-        document.getElementById('countdownMinutes').textContent = String(minutes).padStart(2, '0');
-        document.getElementById('countdownSeconds').textContent = String(seconds).padStart(2, '0');
-      }
-      updateCountdown();
-      setInterval(updateCountdown, 1000);
+        function updateCountdown() {
+          const now = new Date();
+          let diff = targetDate - now;
+          if (diff < 0) diff = 0;
+          document.getElementById('countdownDays').textContent = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+          document.getElementById('countdownHours').textContent = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+          document.getElementById('countdownMinutes').textContent = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+          document.getElementById('countdownSeconds').textContent = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
+        }
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+      });
 
       // ---- SCROLL REVEAL (Intersection Observer) ----
-      (function initReveal() {
+      safe(function() {
         const revealElements = document.querySelectorAll('.reveal');
         if (!revealElements.length) return;
 
+        if (typeof IntersectionObserver === 'undefined') {
+          revealElements.forEach(function(el) { el.classList.add('visible'); });
+          return;
+        }
+
         const revealObserver = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
+          function(entries) {
+            entries.forEach(function(entry) {
               if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
                 revealObserver.unobserve(entry.target);
@@ -1316,31 +1328,26 @@
           },
           { threshold: 0.05, rootMargin: '0px 0px -40px 0px' }
         );
-        revealElements.forEach((el) => revealObserver.observe(el));
+        revealElements.forEach(function(el) { revealObserver.observe(el); });
 
-        // Fallback: if observer hasn't fired after 2s, show all reveal elements
-        setTimeout(function fallbackReveal() {
-          revealElements.forEach((el) => {
-            if (!el.classList.contains('visible')) {
-              el.classList.add('visible');
-            }
+        setTimeout(function() {
+          revealElements.forEach(function(el) {
+            if (!el.classList.contains('visible')) el.classList.add('visible');
           });
         }, 2000);
 
-        // Also handle already-visible elements (in case observer already fired)
-        setTimeout(function checkVisible() {
-          revealElements.forEach((el) => {
-            const rect = el.getBoundingClientRect();
+        setTimeout(function() {
+          revealElements.forEach(function(el) {
+            var rect = el.getBoundingClientRect();
             if (rect.top < window.innerHeight && !el.classList.contains('visible')) {
               el.classList.add('visible');
             }
           });
         }, 300);
-
-      })();
+      });
 
       // ---- MATCH DATA ----
-      const MATCHES = [
+      var MATCHES = [
         { id: 'match_001', home: 'USA', away: 'Canada', status: 'upcoming', hype: 72, comments: 12847, positive: 68, negative: 12, summary: 'The USA vs Canada rivalry is heating up! Fans are debating the starting XI and predicting a high-scoring affair. Key talking points: Pulišić\'s form, Davies\' pace, and the midfield battle.', keywords: ['WorldCup2026', 'USMNT', 'Canada', 'Pulisic', 'Davies', 'goal', 'CONCACAF', 'redcard'] },
         { id: 'match_002', home: 'Mexico', away: 'Costa Rica', status: 'upcoming', hype: 58, comments: 8921, positive: 55, negative: 18, summary: 'Mexico vs Costa Rica — El Tri fans are confident after strong Concacaf Nations League performances. Key debate: Will the attack finally click?', keywords: ['Mexico', 'CostaRica', 'ElTri', 'CONCACAF', 'Ochoa', 'Navas', 'soccer'] },
         { id: 'match_003', home: 'Brazil', away: 'Argentina', status: 'upcoming', hype: 95, comments: 32150, positive: 45, negative: 35, summary: 'The South American Superclásico! Fans are going wild over the Neymar vs Messi legacy debate. Historical rivalry at its finest.', keywords: ['Brazil', 'Argentina', 'Neymar', 'Messi', 'Superclasico', 'Copa', 'GOAT', 'rivalry'] },
@@ -1349,584 +1356,413 @@
         { id: 'match_006', home: 'Portugal', away: 'Netherlands', status: 'upcoming', hype: 77, comments: 15680, positive: 58, negative: 16, summary: 'CR7\'s final World Cup? Dutch fans are buzzing about their generation of talent.', keywords: ['Portugal', 'Netherlands', 'Ronaldo', 'CR7', 'Dutch', 'Oranje', 'final', 'legend'] },
       ];
 
-      // ---- PREDICTOR: Match List ----
-      const matchList = document.getElementById('matchList');
-      let selectedMatch = null;
+      // ---- PREDICTOR: Match List (safe) ----
+      safe(function() {
+        var matchList = document.getElementById('matchList');
+        if (!matchList) return;
+        var selectedMatch = null;
 
-      function renderMatchList() {
-        matchList.innerHTML = '';
-        MATCHES.forEach((match, idx) => {
-          const btn = document.createElement('button');
-          btn.className =
-            `w-full flex items-center gap-3 p-3 rounded-xl text-left transition-all duration-200 ${
+        var flagMap = {
+          'USA': '\uD83C\uDDFA\uD83C\uDDF8', 'Canada': '\uD83C\uDDE8\uD83C\uDDE6', 'Mexico': '\uD83C\uDDF2\uD83C\uDDFD', 'Costa Rica': '\uD83C\uDDE8\uD83C\uDDF7',
+          'Brazil': '\uD83C\uDDE7\uD83C\uDDF7', 'Argentina': '\uD83C\uDDE6\uD83C\uDDF7', 'England': '\uD83C\uDFF4\uDB40\uDC67\uDB40\uDC62\uDB40\uDC65\uDB40\uDC6E\uDB40\uDC67\uDB40\uDC7F', 'France': '\uD83C\uDDEB\uD83C\uDDF7',
+          'Germany': '\uD83C\uDDE9\uD83C\uDDEA', 'Spain': '\uD83C\uDDEA\uD83C\uDDF8', 'Portugal': '\uD83C\uDDF5\uD83C\uDDF9', 'Netherlands': '\uD83C\uDDF3\uD83C\uDDF1',
+        };
+        function getFlag(team) { return flagMap[team] || '\u26BD'; }
+
+        function renderMatchList() {
+          matchList.innerHTML = '';
+          MATCHES.forEach(function(match) {
+            var btn = document.createElement('button');
+            btn.className = 'w-full flex items-center gap-3 p-3 rounded-xl text-left transition-all duration-200 ' + (
               selectedMatch && selectedMatch.id === match.id
                 ? 'bg-emerald-500/10 border border-emerald-500/30'
                 : 'bg-slate-800/30 border border-transparent hover:bg-slate-800/60'
-            }`;
-          btn.innerHTML = `
-            <span class="text-lg">${getFlag(match.home)}</span>
-            <div class="flex-1 min-w-0">
-              <p class="text-sm font-semibold text-white truncate">${match.home} vs ${match.away}</p>
-              <p class="text-xs text-slate-500">${match.status.toUpperCase()}</p>
-            </div>
-            <span class="text-xs text-slate-400 font-mono">Hype: ${match.hype}</span>
-          `;
-          btn.addEventListener('click', () => {
-            selectedMatch = match;
+            );
+            btn.innerHTML = '<span class="text-lg">' + getFlag(match.home) + '</span>' +
+              '<div class="flex-1 min-w-0"><p class="text-sm font-semibold text-white truncate">' + match.home + ' vs ' + match.away + '</p>' +
+              '<p class="text-xs text-slate-500">' + match.status.toUpperCase() + '</p></div>' +
+              '<span class="text-xs text-slate-400 font-mono">Hype: ' + match.hype + '</span>';
+            btn.addEventListener('click', function() {
+              selectedMatch = match;
+              renderMatchList();
+              updatePrediction(match);
+            });
+            matchList.appendChild(btn);
+          });
+          if (!selectedMatch) {
+            selectedMatch = MATCHES[0];
             renderMatchList();
-            updatePrediction(match);
+            updatePrediction(MATCHES[0]);
+          }
+        }
+
+        function updatePrediction(match) {
+          var display = document.getElementById('predictionDisplay');
+          if (!display) return;
+          display.innerHTML = '<div class="flex items-center justify-center gap-4 mb-3">' +
+            '<div class="text-center"><p class="text-2xl mb-1">' + getFlag(match.home) + '</p><p class="text-sm font-semibold text-white">' + match.home + '</p><p class="text-3xl font-black text-emerald-400 mt-1">2</p></div>' +
+            '<p class="text-xl text-slate-500 font-bold">vs</p>' +
+            '<div class="text-center"><p class="text-2xl mb-1">' + getFlag(match.away) + '</p><p class="text-sm font-semibold text-white">' + match.away + '</p><p class="text-3xl font-black text-emerald-400 mt-1">1</p></div>' +
+            '</div>' +
+            '<div class="flex items-center justify-center gap-2">' +
+            '<button class="px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-400 text-xs font-semibold hover:bg-emerald-500/20 transition-colors">\u2212</button>' +
+            '<button class="px-6 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-500 text-white text-sm font-bold hover:from-emerald-500 hover:to-emerald-400 transition-all shadow-lg shadow-emerald-500/20">\uD83D\uDD2E Lock Prediction</button>' +
+            '<button class="px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-400 text-xs font-semibold hover:bg-emerald-500/20 transition-colors">+</button>' +
+            '</div><p class="text-xs text-slate-500 mt-3">Adjust score and lock in your prediction</p>';
+        }
+
+        renderMatchList();
+      });
+
+      // ---- TRIVIA DEMO (safe) ----
+      safe(function() {
+        var tq = [
+          { question: 'Which country has won the most World Cup titles?', options: ['Brazil', 'Germany', 'Italy', 'Argentina'], correct: 0, category: 'History', difficulty: 'Easy' },
+          { question: 'Who scored the most goals in a single World Cup tournament?', options: ['Ronaldo (Brazil)', 'Just Fontaine', 'Gerd M\u00FCller', 'Miroslav Klose'], correct: 1, category: 'Records', difficulty: 'Medium' },
+          { question: 'Which player has the most World Cup appearances?', options: ['Lionel Messi', 'Lothar Matth\u00E4us', 'Paolo Maldini', 'Cristiano Ronaldo'], correct: 1, category: 'Records', difficulty: 'Hard' },
+          { question: 'How many teams will participate in the 2026 World Cup?', options: ['32', '48', '36', '40'], correct: 1, category: 'Trivia', difficulty: 'Medium' },
+          { question: 'Which stadium will host the 2026 World Cup Final?', options: ['MetLife Stadium (NJ)', 'SoFi Stadium (LA)', 'AT&T Stadium (Dallas)', 'BC Place (Vancouver)'], correct: 0, category: 'Venues', difficulty: 'Medium' },
+          { question: 'Who is the all-time top scorer in World Cup history?', options: ['Ronaldo (Brazil)', 'Miroslav Klose', 'Pel\u00E9', 'Just Fontaine'], correct: 1, category: 'Records', difficulty: 'Easy' },
+          { question: 'Which North American nation has advanced furthest in a World Cup?', options: ['USA', 'Mexico', 'Canada', 'Costa Rica'], correct: 1, category: 'North America', difficulty: 'Medium' },
+          { question: 'What is the fastest goal scored in a World Cup match?', options: ['11 seconds', '8 seconds', '15 seconds', '5 seconds'], correct: 0, category: 'Records', difficulty: 'Hard' },
+        ];
+
+        var qEl = document.getElementById('triviaQuestion');
+        var oEl = document.getElementById('triviaOptions');
+        var tagEl = document.getElementById('triviaTag');
+        var progEl = document.getElementById('triviaProgress');
+        var scoreEl = document.getElementById('triviaScore');
+        var timerEl = document.getElementById('triviaTimer');
+        var barEl = document.getElementById('triviaTimerBar');
+        var fbEl = document.getElementById('triviaFeedback');
+        var fbContent = document.getElementById('triviaFeedbackContent');
+        var nextBtn = document.getElementById('triviaNextBtn');
+        var restartBtn = document.getElementById('triviaRestartBtn');
+        if (!qEl || !oEl || !tagEl || !scoreEl || !timerEl || !barEl || !fbEl || !nextBtn || !restartBtn) return;
+
+        var tIdx = 0, tScore = 0, tAnswered = false, tTimer = null, tLeft = 15;
+        var shuffled = tq.slice().sort(function() { return Math.random() - 0.5; }).slice(0, 5);
+
+        function loadQ() {
+          if (tIdx >= shuffled.length) { endGame(); return; }
+          var q = shuffled[tIdx];
+          qEl.textContent = q.question;
+          tagEl.textContent = q.category + ' \u2022 ' + q.difficulty;
+          progEl.textContent = 'Question ' + (tIdx + 1) + ' of ' + shuffled.length;
+          tAnswered = false;
+          nextBtn.classList.add('hidden');
+          fbEl.classList.add('hidden');
+
+          oEl.innerHTML = '';
+          q.options.forEach(function(opt, idx) {
+            var btn = document.createElement('button');
+            btn.className = 'trivia-option w-full flex items-center gap-3 p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/30 text-left';
+            btn.innerHTML = '<span class="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-700/50 text-xs font-bold text-slate-300">' + 'ABCD'[idx] + '</span><span class="text-sm text-slate-200 font-medium">' + opt + '</span>';
+            btn.addEventListener('click', function() { answer(idx, btn); });
+            oEl.appendChild(btn);
           });
-          matchList.appendChild(btn);
-        });
-        // Select first match by default
-        if (!selectedMatch) {
-          selectedMatch = MATCHES[0];
-          renderMatchList();
-          updatePrediction(MATCHES[0]);
-        }
-      }
 
-      function getFlag(team) {
-        const flags = {
-          'USA': '🇺🇸', 'Canada': '🇨🇦', 'Mexico': '🇲🇽', 'Costa Rica': '🇨🇷',
-          'Brazil': '🇧🇷', 'Argentina': '🇦🇷', 'England': '🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'France': '🇫🇷',
-          'Germany': '🇩🇪', 'Spain': '🇪🇸', 'Portugal': '🇵🇹', 'Netherlands': '🇳🇱',
-        };
-        return flags[team] || '⚽';
-      }
+          tLeft = 15;
+          timerEl.textContent = '15s';
+          barEl.style.width = '100%';
+          barEl.style.transition = 'none';
+          void barEl.offsetWidth;
+          barEl.style.transition = 'width 15s linear';
+          barEl.style.width = '0%';
 
-      function updatePrediction(match) {
-        const display = document.getElementById('predictionDisplay');
-        display.innerHTML = `
-          <div class="flex items-center justify-center gap-4 mb-3">
-            <div class="text-center">
-              <p class="text-2xl mb-1">${getFlag(match.home)}</p>
-              <p class="text-sm font-semibold text-white">${match.home}</p>
-              <p class="text-3xl font-black text-emerald-400 mt-1">2</p>
-            </div>
-            <p class="text-xl text-slate-500 font-bold">vs</p>
-            <div class="text-center">
-              <p class="text-2xl mb-1">${getFlag(match.away)}</p>
-              <p class="text-sm font-semibold text-white">${match.away}</p>
-              <p class="text-3xl font-black text-emerald-400 mt-1">1</p>
-            </div>
-          </div>
-          <div class="flex items-center justify-center gap-2">
-            <button class="px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-400 text-xs font-semibold hover:bg-emerald-500/20 transition-colors">−</button>
-            <button class="px-6 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-500 text-white text-sm font-bold hover:from-emerald-500 hover:to-emerald-400 transition-all shadow-lg shadow-emerald-500/20">
-              🔮 Lock Prediction
-            </button>
-            <button class="px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-400 text-xs font-semibold hover:bg-emerald-500/20 transition-colors">+</button>
-          </div>
-          <p class="text-xs text-slate-500 mt-3">Adjust score and lock in your prediction</p>
-        `;
-      }
-
-      renderMatchList();
-
-      // ---- TRIVIA DEMO ----
-      const TRIVIA_QUESTIONS = [
-        { question: 'Which country has won the most World Cup titles?', options: ['Brazil', 'Germany', 'Italy', 'Argentina'], correct: 0, category: 'History', difficulty: 'Easy' },
-        { question: 'Who scored the most goals in a single World Cup tournament?', options: ['Ronaldo (Brazil)', 'Just Fontaine', 'Gerd Müller', 'Miroslav Klose'], correct: 1, category: 'Records', difficulty: 'Medium' },
-        { question: 'Which player has the most World Cup appearances?', options: ['Lionel Messi', 'Lothar Matthäus', 'Paolo Maldini', 'Cristiano Ronaldo'], correct: 1, category: 'Records', difficulty: 'Hard' },
-        { question: 'How many teams will participate in the 2026 World Cup?', options: ['32', '48', '36', '40'], correct: 1, category: 'Trivia', difficulty: 'Medium' },
-        { question: 'Which stadium will host the 2026 World Cup Final?', options: ['MetLife Stadium (NJ)', 'SoFi Stadium (LA)', 'AT&T Stadium (Dallas)', 'BC Place (Vancouver)'], correct: 0, category: 'Venues', difficulty: 'Medium' },
-        { question: 'Who is the all-time top scorer in World Cup history?', options: ['Ronaldo (Brazil)', 'Miroslav Klose', 'Pelé', 'Just Fontaine'], correct: 1, category: 'Records', difficulty: 'Easy' },
-        { question: 'Which North American nation has advanced furthest in a World Cup?', options: ['USA', 'Mexico', 'Canada', 'Costa Rica'], correct: 1, category: 'North America', difficulty: 'Medium' },
-        { question: 'What is the fastest goal scored in a World Cup match?', options: ['11 seconds', '8 seconds', '15 seconds', '5 seconds'], correct: 0, category: 'Records', difficulty: 'Hard' },
-      ];
-
-      let triviaIdx = 0;
-      let triviaScore = 0;
-      let triviaAnswered = false;
-      let triviaTimerInterval = null;
-      let triviaTimeLeft = 15;
-      const QUESTION_TIME = 15;
-
-      const triviaQuestionEl = document.getElementById('triviaQuestion');
-      const triviaOptionsEl = document.getElementById('triviaOptions');
-      const triviaTagEl = document.getElementById('triviaTag');
-      const triviaProgressEl = document.getElementById('triviaProgress');
-      const triviaScoreEl = document.getElementById('triviaScore');
-      const triviaTimerEl = document.getElementById('triviaTimer');
-      const triviaTimerBar = document.getElementById('triviaTimerBar');
-      const triviaFeedback = document.getElementById('triviaFeedback');
-      const triviaFeedbackContent = document.getElementById('triviaFeedbackContent');
-      const triviaNextBtn = document.getElementById('triviaNextBtn');
-      const triviaRestartBtn = document.getElementById('triviaRestartBtn');
-
-      // Shuffle trivia questions
-      const shuffledTrivia = [...TRIVIA_QUESTIONS].sort(() => Math.random() - 0.5).slice(0, 5);
-
-      function loadTriviaQuestion() {
-        if (triviaIdx >= shuffledTrivia.length) {
-          endTriviaGame();
-          return;
-        }
-        const q = shuffledTrivia[triviaIdx];
-        triviaQuestionEl.textContent = q.question;
-        triviaTagEl.textContent = `${q.category} • ${q.difficulty}`;
-        triviaProgressEl.textContent = `Question ${triviaIdx + 1} of ${shuffledTrivia.length}`;
-        triviaAnswered = false;
-        triviaNextBtn.classList.add('hidden');
-        triviaFeedback.classList.add('hidden');
-
-        // Render options
-        triviaOptionsEl.innerHTML = '';
-        q.options.forEach((opt, idx) => {
-          const btn = document.createElement('button');
-          btn.className = 'trivia-option w-full flex items-center gap-3 p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/30 text-left';
-          btn.innerHTML = `
-            <span class="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-700/50 text-xs font-bold text-slate-300">${'ABCD'[idx]}</span>
-            <span class="text-sm text-slate-200 font-medium">${opt}</span>
-          `;
-          btn.addEventListener('click', () => answerTrivia(idx, btn));
-          triviaOptionsEl.appendChild(btn);
-        });
-
-        // Reset timer
-        triviaTimeLeft = QUESTION_TIME;
-        triviaTimerEl.textContent = `${triviaTimeLeft}s`;
-        triviaTimerBar.style.width = '100%';
-        triviaTimerBar.style.transition = 'none';
-        // Force reflow
-        void triviaTimerBar.offsetWidth;
-        triviaTimerBar.style.transition = `width ${QUESTION_TIME}s linear`;
-        triviaTimerBar.style.width = '0%';
-
-        clearInterval(triviaTimerInterval);
-        triviaTimerInterval = setInterval(() => {
-          triviaTimeLeft--;
-          triviaTimerEl.textContent = `${Math.max(0, triviaTimeLeft)}s`;
-          if (triviaTimeLeft <= 0) {
-            clearInterval(triviaTimerInterval);
-            if (!triviaAnswered) {
-              timeUpTrivia();
+          clearInterval(tTimer);
+          tTimer = setInterval(function() {
+            tLeft--;
+            timerEl.textContent = Math.max(0, tLeft) + 's';
+            if (tLeft <= 0) {
+              clearInterval(tTimer);
+              if (!tAnswered) timeUp();
             }
-          }
-        }, 1000);
-      }
-
-      function answerTrivia(idx, btn) {
-        if (triviaAnswered) return;
-        triviaAnswered = true;
-        clearInterval(triviaTimerInterval);
-
-        const q = shuffledTrivia[triviaIdx];
-        const correct = idx === q.correct;
-        const allBtns = triviaOptionsEl.querySelectorAll('button');
-
-        allBtns.forEach((b, i) => {
-          b.style.pointerEvents = 'none';
-          if (i === q.correct) {
-            b.className = 'trivia-option w-full flex items-center gap-3 p-3.5 rounded-xl border text-left bg-emerald-500/10 border-emerald-500/40';
-          } else if (i === idx && !correct) {
-            b.className = 'trivia-option w-full flex items-center gap-3 p-3.5 rounded-xl border text-left bg-red-500/10 border-red-500/40';
-          } else {
-            b.style.opacity = '0.5';
-          }
-        });
-
-        if (correct) {
-          triviaScore += 10;
-          triviaScoreEl.textContent = triviaScore;
-          triviaFeedbackContent.className = 'p-3 rounded-xl text-sm font-semibold text-center bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
-          triviaFeedbackContent.textContent = '✅ Correct! +10 points';
-          spawnConfetti();
-        } else {
-          triviaFeedbackContent.className = 'p-3 rounded-xl text-sm font-semibold text-center bg-red-500/10 text-red-400 border border-red-500/20';
-          triviaFeedbackContent.textContent = `❌ The correct answer was: ${q.options[q.correct]}`;
+          }, 1000);
         }
 
-        triviaFeedback.classList.remove('hidden');
-        triviaTimerBar.style.transition = 'none';
-
-        if (triviaIdx + 1 >= shuffledTrivia.length) {
-          triviaNextBtn.textContent = '🎉 View Results';
-        } else {
-          triviaNextBtn.textContent = 'Next Question →';
-        }
-        triviaNextBtn.classList.remove('hidden');
-      }
-
-      function timeUpTrivia() {
-        const q = shuffledTrivia[triviaIdx];
-        const allBtns = triviaOptionsEl.querySelectorAll('button');
-        allBtns.forEach((b, i) => {
-          b.style.pointerEvents = 'none';
-          if (i === q.correct) {
-            b.className = 'trivia-option w-full flex items-center gap-3 p-3.5 rounded-xl border text-left bg-emerald-500/10 border-emerald-500/40';
-          } else {
-            b.style.opacity = '0.5';
-          }
-        });
-        triviaFeedbackContent.className = 'p-3 rounded-xl text-sm font-semibold text-center bg-hype-500/10 text-hype-400 border border-hype-500/20';
-        triviaFeedbackContent.textContent = '⏰ Time is up!';
-        triviaFeedback.classList.remove('hidden');
-        if (triviaIdx + 1 >= shuffledTrivia.length) {
-          triviaNextBtn.textContent = '🎉 View Results';
-        } else {
-          triviaNextBtn.textContent = 'Next Question →';
-        }
-        triviaNextBtn.classList.remove('hidden');
-      }
-
-      triviaNextBtn.addEventListener('click', () => {
-        triviaIdx++;
-        loadTriviaQuestion();
-      });
-
-      function endTriviaGame() {
-        clearInterval(triviaTimerInterval);
-        triviaQuestionEl.textContent = '🏆 Trivia Complete!';
-        triviaTagEl.textContent = 'FINAL SCORE';
-        triviaOptionsEl.innerHTML = '';
-        triviaFeedback.classList.add('hidden');
-        triviaNextBtn.classList.add('hidden');
-        triviaRestartBtn.classList.remove('hidden');
-        triviaTimerEl.textContent = '--';
-        triviaTimerBar.style.width = '0%';
-        // Show results message
-        const resultDiv = document.createElement('div');
-        resultDiv.className = 'p-6 text-center';
-        let message = '';
-        if (triviaScore >= 40) message = '🌟 World Cup Champion!';
-        else if (triviaScore >= 30) message = '👏 Great knowledge!';
-        else if (triviaScore >= 20) message = '👍 Not bad!';
-        else message = '📚 Keep practicing!';
-        resultDiv.innerHTML = `
-          <p class="text-4xl font-black text-emerald-400 mb-2">${triviaScore}</p>
-          <p class="text-sm text-slate-400">Total Points</p>
-          <p class="text-lg font-semibold text-white mt-3">${message}</p>
-          <p class="text-xs text-slate-500 mt-2">Points contributed to your subreddit leaderboard!</p>
-        `;
-        triviaOptionsEl.appendChild(resultDiv);
-      }
-
-      triviaRestartBtn.addEventListener('click', () => {
-        triviaIdx = 0;
-        triviaScore = 0;
-        triviaScoreEl.textContent = '0';
-        triviaRestartBtn.classList.add('hidden');
-        const shuffled = [...TRIVIA_QUESTIONS].sort(() => Math.random() - 0.5).slice(0, 5);
-        shuffledTrivia.length = 0;
-        shuffledTrivia.push(...shuffled);
-        loadTriviaQuestion();
-      });
-
-      function spawnConfetti() {
-        const colors = ['#22c55e', '#10b981', '#34d399', '#fbbf24', '#f97316', '#ef4444', '#8b5cf6', '#06b6d4'];
-        for (let i = 0; i < 20; i++) {
-          const piece = document.createElement('div');
-          piece.className = 'confetti-piece';
-          piece.style.left = Math.random() * 100 + 'vw';
-          piece.style.top = '-10vh';
-          piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-          piece.style.width = (Math.random() * 8 + 4) + 'px';
-          piece.style.height = (Math.random() * 8 + 4) + 'px';
-          piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-          piece.style.setProperty('--fall-duration', (Math.random() * 2 + 2) + 's');
-          piece.style.animationDelay = Math.random() * 0.5 + 's';
-          document.body.appendChild(piece);
-          setTimeout(() => piece.remove(), 4000);
-        }
-      }
-
-      // Start trivia on page load
-      loadTriviaQuestion();
-
-      // ---- HYPE-METER INTERACTIVE ----
-      const hypeMatchList = document.getElementById('hypeMatchList');
-      let selectedHypeMatch = MATCHES[0];
-
-      function renderHypeMatchList() {
-        hypeMatchList.innerHTML = '';
-        MATCHES.forEach((match) => {
-          const btn = document.createElement('button');
-          btn.className = `w-full flex items-center gap-2 p-2.5 rounded-xl text-left transition-all duration-200 ${
-            selectedHypeMatch.id === match.id
-              ? 'bg-emerald-500/10 border border-emerald-500/30'
-              : 'bg-slate-800/20 border border-transparent hover:bg-slate-800/40'
-          }`;
-          btn.innerHTML = `
-            <span>${getFlag(match.home)} ${getFlag(match.away)}</span>
-            <span class="text-sm text-white font-medium truncate flex-1">${match.home} vs ${match.away}</span>
-            <span class="text-xs font-mono ${match.hype >= 80 ? 'text-red-400' : match.hype >= 60 ? 'text-hype-400' : 'text-slate-500'}">${match.hype}</span>
-          `;
-          btn.addEventListener('click', () => {
-            selectedHypeMatch = match;
-            updateHypeDashboard(match);
-            renderHypeMatchList();
+        function answer(idx, btn) {
+          if (tAnswered) return;
+          tAnswered = true;
+          clearInterval(tTimer);
+          var q = shuffled[tIdx];
+          var correct = idx === q.correct;
+          var allBtns = oEl.querySelectorAll('button');
+          allBtns.forEach(function(b, i) {
+            b.style.pointerEvents = 'none';
+            if (i === q.correct) {
+              b.className = 'trivia-option w-full flex items-center gap-3 p-3.5 rounded-xl border text-left bg-emerald-500/10 border-emerald-500/40';
+            } else if (i === idx && !correct) {
+              b.className = 'trivia-option w-full flex items-center gap-3 p-3.5 rounded-xl border text-left bg-red-500/10 border-red-500/40';
+            } else { b.style.opacity = '0.5'; }
           });
-          hypeMatchList.appendChild(btn);
-        });
-      }
-
-      function updateHypeDashboard(match) {
-        document.getElementById('hypeMatchTitle').textContent = `${match.home} vs ${match.away}`;
-        document.getElementById('hypeMatchStatus').textContent = match.status.toUpperCase();
-        document.getElementById('hypeScore').textContent = match.hype;
-        document.getElementById('hypeBar').style.width = match.hype + '%';
-        document.getElementById('hypeComments').textContent = match.comments.toLocaleString();
-        document.getElementById('hypePositive').textContent = match.positive + '%';
-        document.getElementById('hypeNegative').textContent = match.negative + '%';
-        document.getElementById('sentimentPositive').style.width = match.positive + '%';
-        const neutral = 100 - match.positive - match.negative;
-        document.getElementById('sentimentNeutral').style.width = neutral + '%';
-        document.getElementById('sentimentNegative').style.width = match.negative + '%';
-        document.getElementById('hypeSummary').textContent = match.summary;
-
-        let label = '';
-        if (match.hype >= 80) label = '🔥 ON FIRE!';
-        else if (match.hype >= 60) label = '⚡ HYPED!';
-        else if (match.hype >= 40) label = '👍 Warming Up';
-        else label = '💤 Quiet';
-        document.getElementById('hypeLabel').textContent = label;
-
-        // Keywords
-        const kwContainer = document.getElementById('hypeKeywords');
-        kwContainer.innerHTML = '';
-        match.keywords.forEach((kw) => {
-          const span = document.createElement('span');
-          span.className = 'px-3 py-1.5 rounded-full bg-slate-800/60 text-xs text-slate-300 border border-slate-700/30 hover:border-emerald-500/30 hover:text-emerald-400 transition-all cursor-default';
-          span.textContent = '#' + kw;
-          kwContainer.appendChild(span);
-        });
-      }
-
-      renderHypeMatchList();
-      // Animate hype bar after a small delay for the CSS transition to work
-      requestAnimationFrame(function() {
-        requestAnimationFrame(function() {
-          updateHypeDashboard(MATCHES[0]);
-        });
-      });
-
-      // ---- SMOOTH SCROLL FOR NAV ----
-      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-        anchor.addEventListener('click', function(e) {
-          const href = this.getAttribute('href');
-          if (href === '#') return;
-          e.preventDefault();
-          const target = document.querySelector(href);
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          if (correct) {
+            tScore += 10;
+            scoreEl.textContent = tScore;
+            fbContent.className = 'p-3 rounded-xl text-sm font-semibold text-center bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
+            fbContent.textContent = '\u2705 Correct! +10 points';
+            spawnConfetti();
+          } else {
+            fbContent.className = 'p-3 rounded-xl text-sm font-semibold text-center bg-red-500/10 text-red-400 border border-red-500/20';
+            fbContent.textContent = '\u274C The correct answer was: ' + q.options[q.correct];
           }
+          fbEl.classList.remove('hidden');
+          barEl.style.transition = 'none';
+          nextBtn.textContent = (tIdx + 1 >= shuffled.length) ? '\uD83C\uDF89 View Results' : 'Next Question \u2192';
+          nextBtn.classList.remove('hidden');
+        }
+
+        function timeUp() {
+          var q = shuffled[tIdx];
+          var allBtns = oEl.querySelectorAll('button');
+          allBtns.forEach(function(b, i) {
+            b.style.pointerEvents = 'none';
+            if (i === q.correct) {
+              b.className = 'trivia-option w-full flex items-center gap-3 p-3.5 rounded-xl border text-left bg-emerald-500/10 border-emerald-500/40';
+            } else { b.style.opacity = '0.5'; }
+          });
+          fbContent.className = 'p-3 rounded-xl text-sm font-semibold text-center bg-hype-500/10 text-hype-400 border border-hype-500/20';
+          fbContent.textContent = '\u23F0 Time is up!';
+          fbEl.classList.remove('hidden');
+          nextBtn.textContent = (tIdx + 1 >= shuffled.length) ? '\uD83C\uDF89 View Results' : 'Next Question \u2192';
+          nextBtn.classList.remove('hidden');
+        }
+
+        nextBtn.addEventListener('click', function() { tIdx++; loadQ(); });
+
+        function endGame() {
+          clearInterval(tTimer);
+          qEl.textContent = '\uD83C\uDFC6 Trivia Complete!';
+          tagEl.textContent = 'FINAL SCORE';
+          oEl.innerHTML = '';
+          fbEl.classList.add('hidden');
+          nextBtn.classList.add('hidden');
+          restartBtn.classList.remove('hidden');
+          timerEl.textContent = '--';
+          barEl.style.width = '0%';
+          var div = document.createElement('div');
+          div.className = 'p-6 text-center';
+          var msg = '';
+          if (tScore >= 40) msg = '\uD83C\uDF1F World Cup Champion!';
+          else if (tScore >= 30) msg = '\uD83D\uDC4F Great knowledge!';
+          else if (tScore >= 20) msg = '\uD83D\uDC4D Not bad!';
+          else msg = '\uD83D\uDCDA Keep practicing!';
+          div.innerHTML = '<p class="text-4xl font-black text-emerald-400 mb-2">' + tScore + '</p><p class="text-sm text-slate-400">Total Points</p><p class="text-lg font-semibold text-white mt-3">' + msg + '</p><p class="text-xs text-slate-500 mt-2">Points contributed to your subreddit leaderboard!</p>';
+          oEl.appendChild(div);
+        }
+
+        restartBtn.addEventListener('click', function() {
+          tIdx = 0; tScore = 0; tAnswered = false;
+          scoreEl.textContent = '0';
+          restartBtn.classList.add('hidden');
+          shuffled.length = 0;
+          var fresh = tq.slice().sort(function() { return Math.random() - 0.5; }).slice(0, 5);
+          fresh.forEach(function(q) { shuffled.push(q); });
+          loadQ();
+        });
+
+        function spawnConfetti() {
+          var colors = ['#22c55e', '#10b981', '#34d399', '#fbbf24', '#f97316', '#ef4444', '#8b5cf6', '#06b6d4'];
+          for (var i = 0; i < 20; i++) {
+            var piece = document.createElement('div');
+            piece.className = 'confetti-piece';
+            piece.style.left = Math.random() * 100 + 'vw';
+            piece.style.top = '-10vh';
+            piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+            piece.style.width = (Math.random() * 8 + 4) + 'px';
+            piece.style.height = piece.style.width;
+            piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+            piece.style.setProperty('--fall-duration', (Math.random() * 2 + 2) + 's');
+            piece.style.animationDelay = Math.random() * 0.5 + 's';
+            document.body.appendChild(piece);
+            setTimeout(function(p) { p.remove(); }, 4000, piece);
+          }
+        }
+
+        loadQ();
+      });
+
+      // ---- HYPE-METER INTERACTIVE (safe) ----
+      safe(function() {
+        var hypeMatchList = document.getElementById('hypeMatchList');
+        if (!hypeMatchList) return;
+        var selectedHypeMatch = MATCHES[0];
+
+        function renderHypeMatchList() {
+          hypeMatchList.innerHTML = '';
+          MATCHES.forEach(function(match) {
+            var btn = document.createElement('button');
+            btn.className = 'w-full flex items-center gap-2 p-2.5 rounded-xl text-left transition-all duration-200 ' + (
+              selectedHypeMatch.id === match.id
+                ? 'bg-emerald-500/10 border border-emerald-500/30'
+                : 'bg-slate-800/20 border border-transparent hover:bg-slate-800/40'
+            );
+            var flagText = '';
+            ['USA','Canada','Mexico','Costa Rica','Brazil','Argentina','England','France','Germany','Spain','Portugal','Netherlands'].forEach(function(c) {
+              if (c === match.home || c === match.away) flagText += '\u26BD';
+            });
+            btn.innerHTML = '<span>' + '\u26BD\u26BD' + '</span><span class="text-sm text-white font-medium truncate flex-1">' + match.home + ' vs ' + match.away + '</span><span class="text-xs font-mono ' + (match.hype >= 80 ? 'text-red-400' : match.hype >= 60 ? 'text-hype-400' : 'text-slate-500') + '">' + match.hype + '</span>';
+            btn.addEventListener('click', function() {
+              selectedHypeMatch = match;
+              updateHypeDashboard(match);
+              renderHypeMatchList();
+            });
+            hypeMatchList.appendChild(btn);
+          });
+        }
+
+        function updateHypeDashboard(match) {
+          var id = function(n) { return document.getElementById(n); };
+          var setText = function(n, v) { var e = id(n); if (e) e.textContent = v; };
+          setText('hypeMatchTitle', match.home + ' vs ' + match.away);
+          setText('hypeMatchStatus', match.status.toUpperCase());
+          setText('hypeScore', match.hype);
+          var bar = id('hypeBar'); if (bar) bar.style.width = match.hype + '%';
+          setText('hypeComments', match.comments.toLocaleString());
+          setText('hypePositive', match.positive + '%');
+          setText('hypeNegative', match.negative + '%');
+          var sp = id('sentimentPositive'); if (sp) sp.style.width = match.positive + '%';
+          var sn = id('sentimentNeutral'); if (sn) sn.style.width = (100 - match.positive - match.negative) + '%';
+          var sneg = id('sentimentNegative'); if (sneg) sneg.style.width = match.negative + '%';
+          setText('hypeSummary', match.summary);
+          var label = '';
+          if (match.hype >= 80) label = '\uD83D\uDD25 ON FIRE!';
+          else if (match.hype >= 60) label = '\u26A1 HYPED!';
+          else if (match.hype >= 40) label = '\uD83D\uDC4D Warming Up';
+          else label = '\uD83D\uDCA4 Quiet';
+          setText('hypeLabel', label);
+
+          var kwContainer = id('hypeKeywords');
+          if (kwContainer) {
+            kwContainer.innerHTML = '';
+            match.keywords.forEach(function(kw) {
+              var span = document.createElement('span');
+              span.className = 'px-3 py-1.5 rounded-full bg-slate-800/60 text-xs text-slate-300 border border-slate-700/30 hover:border-emerald-500/30 hover:text-emerald-400 transition-all cursor-default';
+              span.textContent = '#' + kw;
+              kwContainer.appendChild(span);
+            });
+          }
+        }
+
+        renderHypeMatchList();
+        requestAnimationFrame(function() {
+          requestAnimationFrame(function() { updateHypeDashboard(MATCHES[0]); });
         });
       });
 
-      // ---- INVOICE GENERATOR ----
-      const invForm = document.getElementById('invoiceForm');
-      const invClient = document.getElementById('invClient');
-      const invCompany = document.getElementById('invCompany');
-      const invEmail = document.getElementById('invEmail');
-      const invAmount = document.getElementById('invAmount');
-      const invService = document.getElementById('invService');
-      const invNumber = document.getElementById('invNumber');
-      const invDate = document.getElementById('invDate');
-      const invPreview = document.getElementById('invoicePreview');
-      const generateBtn = document.getElementById('generateInvoiceBtn');
-      const downloadBtn = document.getElementById('downloadPdfBtn');
+      // ---- SMOOTH SCROLL FOR NAV (ALWAYS runs — highest priority) ----
+      try {
+        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+          anchor.addEventListener('click', function(e) {
+            var href = this.getAttribute('href');
+            if (href === '#') return;
+            e.preventDefault();
+            var target = document.querySelector(href);
+            if (target) {
+              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          });
+        });
+      } catch(e) { console.warn('[Nav]', e); }
 
-      let generated = false;
-      let lastData = null;
+      // ---- INVOICE GENERATOR (safe) ----
+      safe(function() {
+        var invClient = document.getElementById('invClient');
+        var invCompany = document.getElementById('invCompany');
+        var invEmail = document.getElementById('invEmail');
+        var invAmount = document.getElementById('invAmount');
+        var invService = document.getElementById('invService');
+        var invNumber = document.getElementById('invNumber');
+        var invDate = document.getElementById('invDate');
+        var invPreview = document.getElementById('invoicePreview');
+        var generateBtn = document.getElementById('generateInvoiceBtn');
+        var downloadBtn = document.getElementById('downloadPdfBtn');
+        if (!invClient || !invEmail || !invAmount || !invService || !invNumber || !invDate || !invPreview || !generateBtn || !downloadBtn) return;
 
-      function generateInvoiceNumber() {
-        const now = new Date();
-        const y = now.getFullYear();
-        const r = String(Math.floor(Math.random() * 90000) + 10000);
-        return `INV-${y}-${r}`;
-      }
+        var generated = false;
+        var lastData = null;
 
-      function formatDate(d) {
-        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-        return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
-      }
-
-      function buildPreview(data) {
-        invPreview.innerHTML = `
-          <div class="p-5 rounded-xl bg-slate-800/40 border border-slate-700/30">
-            <div class="flex items-center justify-between mb-4 pb-4 border-b border-slate-700/30">
-              <div>
-                <span class="text-xs text-slate-500 block">${data.invNumber}</span>
-                <span class="text-xs text-slate-500">${data.date}</span>
-              </div>
-              <div class="text-right">
-                <span class="font-bold text-emerald-400 text-lg">$${data.amount.toFixed(2)}</span>
-                <span class="text-xs text-slate-500 block">USD</span>
-              </div>
-            </div>
-            <div class="space-y-2 text-sm">
-              <p><span class="text-slate-500">Client:</span> <span class="text-white font-medium">${escapeHtml(data.client)}</span></p>
-              ${data.company ? `<p><span class="text-slate-500">Company:</span> <span class="text-white">${escapeHtml(data.company)}</span></p>` : ''}
-              <p><span class="text-slate-500">Email:</span> <span class="text-white">${escapeHtml(data.email)}</span></p>
-              <p class="pt-2 border-t border-slate-700/30">
-                <span class="text-slate-500">Service:</span><br>
-                <span class="text-white">${escapeHtml(data.service)}</span>
-              </p>
-            </div>
-          </div>
-        `;
-      }
-
-      function escapeHtml(str) {
-        const d = document.createElement('div');
-        d.textContent = str;
-        return d.innerHTML;
-      }
-
-      generateBtn.addEventListener('click', function() {
-        const client = invClient.value.trim();
-        const company = invCompany.value.trim();
-        const email = invEmail.value.trim();
-        const amount = parseFloat(invAmount.value);
-        const service = invService.value.trim();
-
-        if (!client || !email || !amount || !service) {
-          invPreview.innerHTML = `
-            <div class="flex flex-col items-center justify-center h-64 text-center">
-              <svg class="w-12 h-12 text-red-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-              <p class="text-red-400 text-sm font-medium">Please fill in all required fields</p>
-            </div>
-          `;
-          return;
+        function genNum() {
+          var d = new Date();
+          return 'INV-' + d.getFullYear() + '-' + String(Math.floor(Math.random() * 90000) + 10000);
         }
-
-        const num = generateInvoiceNumber();
-        const d = new Date();
-        invNumber.textContent = num;
-        invDate.textContent = formatDate(d);
-
-        lastData = { client, company, email, amount, service, invNumber: num, date: formatDate(d) };
-        buildPreview(lastData);
-        generated = true;
-        downloadBtn.disabled = false;
-        downloadBtn.className = 'w-full sm:flex-1 px-6 py-3.5 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 transition-all duration-300';
-      });
-
-      downloadBtn.addEventListener('click', function() {
-        if (!generated || !lastData) return;
-        if (typeof window.jspdf === 'undefined' || typeof window.jspdf.jsPDF !== 'function') {
-          alert('PDF library loading. Please try again in a moment.');
-          return;
+        function fmtDate(d) {
+          return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
         }
+        function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF({ unit: 'mm', format: 'a4' });
-        const pageW = 210;
-        const margin = 20;
-        const contentW = pageW - margin * 2;
-
-        // Colors
-        const primary = [16, 185, 129];
-        const darkBg = [15, 23, 42];
-        const darkCard = [30, 41, 59];
-        const textMain = [248, 250, 252];
-        const textMuted = [148, 163, 184];
-
-        // --- Header ---
-        doc.setFillColor(...darkBg);
-        doc.rect(0, 0, pageW, 50, 'F');
-
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(24);
-        doc.setTextColor(...primary);
-        doc.text('APLEADS', margin, 22);
-
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(9);
-        doc.setTextColor(...textMuted);
-        doc.text('Professional Invoice Generator', margin, 30);
-
-        doc.setFontSize(8);
-        doc.text('Zero setup \u2022 No signup \u2022 Instant PDF', margin, 36);
-
-        // Invoice number + date
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(14);
-        doc.setTextColor(...textMain);
-        doc.text(lastData.invNumber, pageW - margin, 22, { align: 'right' });
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(9);
-        doc.setTextColor(...textMuted);
-        doc.text('Date: ' + lastData.date, pageW - margin, 30, { align: 'right' });
-
-        // --- Bill To ---
-        const billY = 65;
-        doc.setFillColor(...darkCard);
-        doc.roundedRect(margin, billY, contentW, 40, 3, 3, 'F');
-
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(10);
-        doc.setTextColor(...primary);
-        doc.text('BILL TO', margin + 6, billY + 10);
-
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(10);
-        doc.setTextColor(...textMain);
-        doc.text(lastData.client, margin + 6, billY + 20);
-        if (lastData.company) {
-          doc.setFontSize(9);
-          doc.setTextColor(...textMuted);
-          doc.text(lastData.company, margin + 6, billY + 29);
-        }
-        doc.setFontSize(9);
-        doc.setTextColor(...textMuted);
-        doc.text('Email: ' + lastData.email, margin + 6, billY + (lastData.company ? 37 : 30));
-
-        // --- Service Table ---
-        const tableY = billY + 55;
-        doc.autoTable({
-          startY: tableY,
-          head: [['Service Description', 'Qty', 'Unit Price', 'Amount']],
-          body: [
-            [lastData.service, '1', '$' + lastData.amount.toFixed(2), '$' + lastData.amount.toFixed(2)]
-          ],
-          theme: 'grid',
-          headStyles: {
-            fillColor: primary,
-            textColor: [255, 255, 255],
-            fontStyle: 'bold',
-            fontSize: 9,
-          },
-          bodyStyles: {
-            fillColor: darkCard,
-            textColor: textMain,
-            fontSize: 9,
-          },
-          columnStyles: {
-            0: { cellWidth: contentW * 0.5 },
-            1: { cellWidth: contentW * 0.15, halign: 'center' },
-            2: { cellWidth: contentW * 0.175, halign: 'right' },
-            3: { cellWidth: contentW * 0.175, halign: 'right' },
-          },
-          margin: { left: margin, right: margin },
-          tableLineColor: [51, 65, 85],
-          tableLineWidth: 0.1,
+        generateBtn.addEventListener('click', function() {
+          var client = invClient.value.trim();
+          var company = invCompany.value.trim();
+          var email = invEmail.value.trim();
+          var amount = parseFloat(invAmount.value);
+          var service = invService.value.trim();
+          if (!client || !email || !amount || !service) {
+            invPreview.innerHTML = '<div class="flex flex-col items-center justify-center py-12 text-center"><svg class="w-12 h-12 text-red-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><p class="text-red-400 text-sm font-medium">Please fill in all required fields</p></div>';
+            return;
+          }
+          var num = genNum();
+          var d = new Date();
+          invNumber.textContent = num;
+          invDate.textContent = fmtDate(d);
+          lastData = { client:client, company:company, email:email, amount:amount, service:service, invNumber:num, date:fmtDate(d) };
+          invPreview.innerHTML = '<div class="p-5 rounded-xl bg-slate-800/40 border border-slate-700/30">' +
+            '<div class="flex items-center justify-between mb-4 pb-4 border-b border-slate-700/30"><div><span class="text-xs text-slate-500 block">' + esc(num) + '</span><span class="text-xs text-slate-500">' + esc(fmtDate(d)) + '</span></div>' +
+            '<div class="text-right"><span class="font-bold text-emerald-400 text-lg">$' + amount.toFixed(2) + '</span><span class="text-xs text-slate-500 block">USD</span></div></div>' +
+            '<div class="space-y-2 text-sm"><p><span class="text-slate-500">Client:</span> <span class="text-white font-medium">' + esc(client) + '</span></p>' +
+            (company ? '<p><span class="text-slate-500">Company:</span> <span class="text-white">' + esc(company) + '</span></p>' : '') +
+            '<p><span class="text-slate-500">Email:</span> <span class="text-white">' + esc(email) + '</span></p>' +
+            '<p class="pt-2 border-t border-slate-700/30"><span class="text-slate-500">Service:</span><br><span class="text-white">' + esc(service) + '</span></p></div></div>';
+          generated = true;
+          downloadBtn.disabled = false;
+          downloadBtn.className = 'w-full sm:flex-1 px-6 py-3.5 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 transition-all duration-300';
         });
 
-        // --- Total ---
-        const finalY = doc.lastAutoTable.finalY + 8;
-        doc.setFillColor(...darkCard);
-        doc.roundedRect(margin + contentW * 0.55, finalY, contentW * 0.45, 22, 3, 3, 'F');
+        downloadBtn.addEventListener('click', function() {
+          if (!generated || !lastData) return;
+          if (typeof window.jspdf === 'undefined' || typeof window.jspdf.jsPDF !== 'function') {
+            alert('PDF library loading. Please try again in a moment.');
+            return;
+          }
+          var PDF = window.jspdf.jsPDF;
+          var doc = new PDF({ unit: 'mm', format: 'a4' });
+          var pw = 210, mg = 20, cw = pw - mg * 2;
+          var pr = [16,185,129], db = [15,23,42], dc = [30,41,59], tm = [248,250,252], tmu = [148,163,184];
 
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(10);
-        doc.setTextColor(...textMuted);
-        doc.text('TOTAL USD', margin + 6 + contentW * 0.55, finalY + 10);
+          doc.setFillColor.apply(doc, db); doc.rect(0, 0, pw, 50, 'F');
+          doc.setFont('helvetica','bold'); doc.setFontSize(24); doc.setTextColor.apply(doc, pr); doc.text('APLEADS', mg, 22);
+          doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor.apply(doc, tmu); doc.text('Professional Invoice Generator', mg, 30);
+          doc.setFontSize(8); doc.text('Zero setup \u2022 No signup \u2022 Instant PDF', mg, 36);
+          doc.setFont('helvetica','bold'); doc.setFontSize(14); doc.setTextColor.apply(doc, tm); doc.text(lastData.invNumber, pw - mg, 22, { align:'right' });
+          doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor.apply(doc, tmu); doc.text('Date: ' + lastData.date, pw - mg, 30, { align:'right' });
 
-        doc.setFontSize(16);
-        doc.setTextColor(...primary);
-        doc.text('$' + lastData.amount.toFixed(2), pageW - margin - 6, finalY + 10, { align: 'right' });
+          var billY = 65;
+          doc.setFillColor.apply(doc, dc); doc.roundedRect(mg, billY, cw, 40, 3, 3, 'F');
+          doc.setFont('helvetica','bold'); doc.setFontSize(10); doc.setTextColor.apply(doc, pr); doc.text('BILL TO', mg + 6, billY + 10);
+          doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor.apply(doc, tm); doc.text(lastData.client, mg + 6, billY + 20);
+          if (lastData.company) { doc.setFontSize(9); doc.setTextColor.apply(doc, tmu); doc.text(lastData.company, mg + 6, billY + 29); }
+          doc.setFontSize(9); doc.setTextColor.apply(doc, tmu); doc.text('Email: ' + lastData.email, mg + 6, billY + (lastData.company ? 37 : 30));
 
-        // --- Footer ---
-        doc.setFontSize(8);
-        doc.setTextColor(...textMuted);
-        doc.text('Generated by Apleads Invoice Generator', pageW / 2, 285, { align: 'center' });
-        doc.text('Page 1 of 1', pageW / 2, 291, { align: 'center' });
+          doc.autoTable({
+            startY: billY + 55,
+            head: [['Service Description','Qty','Unit Price','Amount']],
+            body: [[lastData.service, '1', '$' + lastData.amount.toFixed(2), '$' + lastData.amount.toFixed(2)]],
+            theme: 'grid',
+            headStyles: { fillColor: pr, textColor: [255,255,255], fontStyle:'bold', fontSize:9 },
+            bodyStyles: { fillColor: dc, textColor: tm, fontSize:9 },
+            columnStyles: { 0:{cellWidth:cw*0.5}, 1:{cellWidth:cw*0.15,halign:'center'}, 2:{cellWidth:cw*0.175,halign:'right'}, 3:{cellWidth:cw*0.175,halign:'right'} },
+            margin: { left:mg, right:mg },
+            tableLineColor: [51,65,85], tableLineWidth: 0.1,
+          });
 
-        // Save
-        doc.save(lastData.invNumber + '.pdf');
+          var fy = doc.lastAutoTable.finalY + 8;
+          doc.setFillColor.apply(doc, dc); doc.roundedRect(mg + cw*0.55, fy, cw*0.45, 22, 3, 3, 'F');
+          doc.setFont('helvetica','bold'); doc.setFontSize(10); doc.setTextColor.apply(doc, tmu); doc.text('TOTAL USD', mg + 6 + cw*0.55, fy + 10);
+          doc.setFontSize(16); doc.setTextColor.apply(doc, pr); doc.text('$' + lastData.amount.toFixed(2), pw - mg - 6, fy + 10, { align:'right' });
+          doc.setFontSize(8); doc.setTextColor.apply(doc, tmu); doc.text('Generated by Apleads Invoice Generator', pw/2, 285, { align:'center' });
+          doc.text('Page 1 of 1', pw/2, 291, { align:'center' });
+          doc.save(lastData.invNumber + '.pdf');
+        });
       });
 
     })();
