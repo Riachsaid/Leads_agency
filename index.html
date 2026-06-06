@@ -11,6 +11,11 @@
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com">
   </script>
+  <!-- jsPDF for Invoice Generator -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js">
+  </script>
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -295,6 +300,7 @@
           <a href="#b2b" class="text-sm font-medium text-slate-300 hover:text-emerald-400 transition-colors">For Partners</a>
           <a href="#buy-crypto" class="text-sm font-medium text-slate-300 hover:text-emerald-400 transition-colors">Buy Crypto</a>
           <a href="#devvit" class="text-sm font-medium text-slate-300 hover:text-emerald-400 transition-colors">Devvit</a>
+          <a href="#invoice" class="text-sm font-medium text-slate-300 hover:text-emerald-400 transition-colors">Invoice</a>
           <a href="#get-started"
              class="px-5 py-2.5 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 transition-all duration-300">
             Get Started
@@ -319,6 +325,7 @@
         <a href="#b2b" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-emerald-400 transition-all">For Partners</a>
         <a href="#buy-crypto" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-emerald-400 transition-all">Buy Crypto</a>
         <a href="#devvit" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-emerald-400 transition-all">Devvit</a>
+        <a href="#invoice" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-emerald-400 transition-all">Invoice</a>
         <a href="#get-started"
            class="block px-4 py-2.5 rounded-lg text-sm font-semibold text-center text-white bg-gradient-to-r from-emerald-600 to-emerald-500">
           Get Started
@@ -1045,6 +1052,132 @@
   </style>
 
   <!-- ============================================================ -->
+  <!-- INVOICE GENERATOR                                            -->
+  <!-- ============================================================ -->
+  <section class="relative py-24 sm:py-32 bg-gradient-to-b from-transparent via-slate-900/40 to-transparent overflow-hidden" id="invoice">
+    <!-- Section background -->
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_rgba(16,185,129,0.04)_0%,_transparent_60%)]"></div>
+    <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Section header -->
+      <div class="text-center mb-14 reveal">
+        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-4">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Invoice Generator
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-transparent bg-gradient-to-r from-white via-emerald-200 to-white bg-clip-text">
+          Create Professional Invoices
+        </h2>
+        <p class="mt-4 text-base sm:text-lg text-slate-400 max-w-2xl mx-auto">
+          Generate polished PDF invoices in seconds. Powered by <span class="font-semibold text-emerald-400">Apleads</span> — zero setup, no signup.
+        </p>
+      </div>
+
+      <!-- Invoice Generator Grid -->
+      <div class="grid lg:grid-cols-5 gap-8">
+        <!-- Left: Form -->
+        <div class="lg:col-span-3 reveal" style="transition-delay:0.1s">
+          <div class="p-6 sm:p-8 rounded-2xl bg-slate-900/60 border border-slate-800/50 backdrop-blur-xl shadow-2xl shadow-emerald-500/5">
+            <h3 class="text-lg font-bold text-white mb-6">Invoice Details</h3>
+            <form id="invoiceForm" class="space-y-5" onsubmit="return false;">
+              <!-- Row 1: Client & Company -->
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Client Name</label>
+                  <input type="text" id="invClient" required
+                    class="w-full px-4 py-3 rounded-xl bg-slate-800/60 border border-slate-700/50 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/20 transition-all"
+                    placeholder="John Doe">
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Company Name</label>
+                  <input type="text" id="invCompany"
+                    class="w-full px-4 py-3 rounded-xl bg-slate-800/60 border border-slate-700/50 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/20 transition-all"
+                    placeholder="Acme Corp">
+                </div>
+              </div>
+              <!-- Row 2: Email & Amount -->
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Email</label>
+                  <input type="email" id="invEmail" required
+                    class="w-full px-4 py-3 rounded-xl bg-slate-800/60 border border-slate-700/50 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/20 transition-all"
+                    placeholder="john@acme.com">
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Amount (USD)</label>
+                  <div class="relative">
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm font-semibold">$</span>
+                    <input type="number" id="invAmount" required min="1" step="0.01"
+                      class="w-full pl-8 pr-4 py-3 rounded-xl bg-slate-800/60 border border-slate-700/50 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/20 transition-all"
+                      placeholder="0.00">
+                  </div>
+                </div>
+              </div>
+              <!-- Row 3: Service -->
+              <div>
+                <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Service Description</label>
+                <textarea id="invService" rows="3" required
+                  class="w-full px-4 py-3 rounded-xl bg-slate-800/60 border border-slate-700/50 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/20 transition-all resize-none"
+                  placeholder="Describe the service provided..."></textarea>
+              </div>
+
+              <!-- Invoice Meta -->
+              <div class="grid sm:grid-cols-2 gap-4 p-4 rounded-xl bg-slate-800/30 border border-slate-700/30">
+                <div>
+                  <span class="text-xs text-slate-500">Invoice #</span>
+                  <p class="text-sm font-mono text-emerald-400 font-semibold" id="invNumber">—</p>
+                </div>
+                <div>
+                  <span class="text-xs text-slate-500">Date</span>
+                  <p class="text-sm font-mono text-white" id="invDate">—</p>
+                </div>
+              </div>
+
+              <!-- Buttons -->
+              <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                <button type="button" id="generateInvoiceBtn"
+                  class="flex-1 px-6 py-3.5 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 transition-all duration-300">
+                  <span class="flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    Generate Invoice
+                  </span>
+                </button>
+                <button type="button" id="downloadPdfBtn" disabled
+                  class="flex-1 px-6 py-3.5 rounded-xl text-sm font-bold text-white bg-slate-700/60 border border-slate-600/50 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-700/80 transition-all duration-300">
+                  <span class="flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    Download PDF
+                  </span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Right: Preview -->
+        <div class="lg:col-span-2 reveal" style="transition-delay:0.2s">
+          <div class="p-6 sm:p-8 rounded-2xl bg-slate-900/60 border border-slate-800/50 backdrop-blur-xl shadow-2xl shadow-emerald-500/5 h-full">
+            <h3 class="text-lg font-bold text-white mb-4">Preview</h3>
+            <div id="invoicePreview" class="space-y-4">
+              <div class="flex flex-col items-center justify-center h-64 text-center">
+                <svg class="w-16 h-16 text-slate-700 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                <p class="text-slate-500 text-sm">Fill in the form and click<br><span class="text-emerald-400 font-semibold">Generate Invoice</span> to see a preview</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apleads Branding Bar -->
+    <div class="mt-12 text-center">
+      <p class="text-xs text-slate-600">
+        <span class="font-semibold text-slate-500">Apleads</span> — Professional Invoice Generator
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
   <!-- FOOTER                                                       -->
   <!-- ============================================================ -->
   <footer class="border-t border-slate-800/50 py-12">
@@ -1067,6 +1200,7 @@
             <li><a href="#trivia" class="text-xs text-slate-500 hover:text-emerald-400 transition-colors">Live Trivia</a></li>
             <li><a href="#hype" class="text-xs text-slate-500 hover:text-emerald-400 transition-colors">Hype-Meter</a></li>
             <li><a href="#b2b" class="text-xs text-slate-500 hover:text-emerald-400 transition-colors">Lead Generation</a></li>
+            <li><a href="#invoice" class="text-xs text-slate-500 hover:text-emerald-400 transition-colors">Invoice Generator</a></li>
           </ul>
         </div>
         <div>
@@ -1542,6 +1676,216 @@
             target.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
         });
+      });
+
+      // ---- INVOICE GENERATOR ----
+      const invForm = document.getElementById('invoiceForm');
+      const invClient = document.getElementById('invClient');
+      const invCompany = document.getElementById('invCompany');
+      const invEmail = document.getElementById('invEmail');
+      const invAmount = document.getElementById('invAmount');
+      const invService = document.getElementById('invService');
+      const invNumber = document.getElementById('invNumber');
+      const invDate = document.getElementById('invDate');
+      const invPreview = document.getElementById('invoicePreview');
+      const generateBtn = document.getElementById('generateInvoiceBtn');
+      const downloadBtn = document.getElementById('downloadPdfBtn');
+
+      let generated = false;
+      let lastData = null;
+
+      function generateInvoiceNumber() {
+        const now = new Date();
+        const y = now.getFullYear();
+        const r = String(Math.floor(Math.random() * 90000) + 10000);
+        return `INV-${y}-${r}`;
+      }
+
+      function formatDate(d) {
+        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+      }
+
+      function buildPreview(data) {
+        invPreview.innerHTML = `
+          <div class="p-5 rounded-xl bg-slate-800/40 border border-slate-700/30">
+            <div class="flex items-center justify-between mb-4 pb-4 border-b border-slate-700/30">
+              <div>
+                <span class="text-xs text-slate-500 block">${data.invNumber}</span>
+                <span class="text-xs text-slate-500">${data.date}</span>
+              </div>
+              <div class="text-right">
+                <span class="font-bold text-emerald-400 text-lg">$${data.amount.toFixed(2)}</span>
+                <span class="text-xs text-slate-500 block">USD</span>
+              </div>
+            </div>
+            <div class="space-y-2 text-sm">
+              <p><span class="text-slate-500">Client:</span> <span class="text-white font-medium">${escapeHtml(data.client)}</span></p>
+              ${data.company ? `<p><span class="text-slate-500">Company:</span> <span class="text-white">${escapeHtml(data.company)}</span></p>` : ''}
+              <p><span class="text-slate-500">Email:</span> <span class="text-white">${escapeHtml(data.email)}</span></p>
+              <p class="pt-2 border-t border-slate-700/30">
+                <span class="text-slate-500">Service:</span><br>
+                <span class="text-white">${escapeHtml(data.service)}</span>
+              </p>
+            </div>
+          </div>
+        `;
+      }
+
+      function escapeHtml(str) {
+        const d = document.createElement('div');
+        d.textContent = str;
+        return d.innerHTML;
+      }
+
+      generateBtn.addEventListener('click', function() {
+        const client = invClient.value.trim();
+        const company = invCompany.value.trim();
+        const email = invEmail.value.trim();
+        const amount = parseFloat(invAmount.value);
+        const service = invService.value.trim();
+
+        if (!client || !email || !amount || !service) {
+          invPreview.innerHTML = `
+            <div class="flex flex-col items-center justify-center h-64 text-center">
+              <svg class="w-12 h-12 text-red-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <p class="text-red-400 text-sm font-medium">Please fill in all required fields</p>
+            </div>
+          `;
+          return;
+        }
+
+        const num = generateInvoiceNumber();
+        const d = new Date();
+        invNumber.textContent = num;
+        invDate.textContent = formatDate(d);
+
+        lastData = { client, company, email, amount, service, invNumber: num, date: formatDate(d) };
+        buildPreview(lastData);
+        generated = true;
+        downloadBtn.disabled = false;
+        downloadBtn.className = 'flex-1 px-6 py-3.5 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 transition-all duration-300';
+      });
+
+      downloadBtn.addEventListener('click', function() {
+        if (!generated || !lastData) return;
+
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+        const pageW = 210;
+        const margin = 20;
+        const contentW = pageW - margin * 2;
+
+        // Colors
+        const primary = [16, 185, 129];
+        const darkBg = [15, 23, 42];
+        const darkCard = [30, 41, 59];
+        const textMain = [248, 250, 252];
+        const textMuted = [148, 163, 184];
+
+        // --- Header ---
+        doc.setFillColor(...darkBg);
+        doc.rect(0, 0, pageW, 50, 'F');
+
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(24);
+        doc.setTextColor(...primary);
+        doc.text('APLEADS', margin, 22);
+
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9);
+        doc.setTextColor(...textMuted);
+        doc.text('Professional Invoice Generator', margin, 30);
+
+        doc.setFontSize(8);
+        doc.text('Zero setup \u2022 No signup \u2022 Instant PDF', margin, 36);
+
+        // Invoice number + date
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(14);
+        doc.setTextColor(...textMain);
+        doc.text(lastData.invNumber, pageW - margin, 22, { align: 'right' });
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9);
+        doc.setTextColor(...textMuted);
+        doc.text('Date: ' + lastData.date, pageW - margin, 30, { align: 'right' });
+
+        // --- Bill To ---
+        const billY = 65;
+        doc.setFillColor(...darkCard);
+        doc.roundedRect(margin, billY, contentW, 40, 3, 3, 'F');
+
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        doc.setTextColor(...primary);
+        doc.text('BILL TO', margin + 6, billY + 10);
+
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(10);
+        doc.setTextColor(...textMain);
+        doc.text(lastData.client, margin + 6, billY + 20);
+        if (lastData.company) {
+          doc.setFontSize(9);
+          doc.setTextColor(...textMuted);
+          doc.text(lastData.company, margin + 6, billY + 29);
+        }
+        doc.setFontSize(9);
+        doc.setTextColor(...textMuted);
+        doc.text('Email: ' + lastData.email, margin + 6, billY + (lastData.company ? 37 : 30));
+
+        // --- Service Table ---
+        const tableY = billY + 55;
+        doc.autoTable({
+          startY: tableY,
+          head: [['Service Description', 'Qty', 'Unit Price', 'Amount']],
+          body: [
+            [lastData.service, '1', '$' + lastData.amount.toFixed(2), '$' + lastData.amount.toFixed(2)]
+          ],
+          theme: 'grid',
+          headStyles: {
+            fillColor: primary,
+            textColor: [255, 255, 255],
+            fontStyle: 'bold',
+            fontSize: 9,
+          },
+          bodyStyles: {
+            fillColor: darkCard,
+            textColor: textMain,
+            fontSize: 9,
+          },
+          columnStyles: {
+            0: { cellWidth: contentW * 0.5 },
+            1: { cellWidth: contentW * 0.15, halign: 'center' },
+            2: { cellWidth: contentW * 0.175, halign: 'right' },
+            3: { cellWidth: contentW * 0.175, halign: 'right' },
+          },
+          margin: { left: margin, right: margin },
+          tableLineColor: [51, 65, 85],
+          tableLineWidth: 0.1,
+        });
+
+        // --- Total ---
+        const finalY = doc.lastAutoTable.finalY + 8;
+        doc.setFillColor(...darkCard);
+        doc.roundedRect(margin + contentW * 0.55, finalY, contentW * 0.45, 22, 3, 3, 'F');
+
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        doc.setTextColor(...textMuted);
+        doc.text('TOTAL USD', margin + 6 + contentW * 0.55, finalY + 10);
+
+        doc.setFontSize(16);
+        doc.setTextColor(...primary);
+        doc.text('$' + lastData.amount.toFixed(2), pageW - margin - 6, finalY + 10, { align: 'right' });
+
+        // --- Footer ---
+        doc.setFontSize(8);
+        doc.setTextColor(...textMuted);
+        doc.text('Generated by Apleads Invoice Generator', pageW / 2, 285, { align: 'center' });
+        doc.text('Page 1 of 1', pageW / 2, 291, { align: 'center' });
+
+        // Save
+        doc.save(lastData.invNumber + '.pdf');
       });
 
     })();
