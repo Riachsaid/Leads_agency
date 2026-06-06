@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>World Cup 2026 — Predictor King | Live Trivia &amp; Hype-Meter</title>
+  <meta name="description" content="World Cup 2026 Predictor King — predict matches, dominate trivia, track the hype. Plus B2B contractor lead generation for roofing, glass repair, water damage, tree removal, and general contracting." />
+  <meta name="theme-color" content="#020617" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>" />
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            pitch: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+              950: '#052e16',
+            },
+            hype: {
+              50: '#fff7ed',
+              100: '#ffedd5',
+              200: '#fed7aa',
+              300: '#fdba74',
+              400: '#fb923c',
+              500: '#f97316',
+              600: '#ea580c',
+              700: '#c2410c',
+              800: '#9a3412',
+              900: '#7c2d12',
+              950: '#431407',
+            },
+            ice: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+              950: '#082f49',
+            },
+          },
+          fontFamily: {
+            display: ['"Inter"', 'system-ui', '-apple-system', 'sans-serif'],
+            body: ['"Inter"', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          animation: {
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'glow': 'glow 2s ease-in-out infinite alternate',
+            'slide-up': 'slideUp 0.6s ease-out',
+            'slide-down': 'slideDown 0.4s ease-out',
+            'fade-in': 'fadeIn 0.8s ease-out',
+            'bar-fill': 'barFill 1.5s ease-out forwards',
+            'count-up': 'countUp 2s ease-out forwards',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-12px)' },
+            },
+            glow: {
+              '0%': { boxShadow: '0 0 20px rgba(34, 197, 94, 0.3)' },
+              '100%': { boxShadow: '0 0 40px rgba(34, 197, 94, 0.6)' },
+            },
+            slideUp: {
+              '0%': { transform: 'translateY(30px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' },
+            },
+            slideDown: {
+              '0%': { transform: 'translateY(-20px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' },
+            },
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            barFill: {
+              '0%': { width: '0%' },
+            },
+            countUp: {
+              '0%': { opacity: '0', transform: 'translateY(10px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #020617;
+      color: #f1f5f9;
+      overflow-x: hidden;
+    }
+
+    /* Animated gradient background */
+    .bg-gradient-animated {
+      background: linear-gradient(135deg, #020617 0%, #0f172a 30%, #1e293b 60%, #020617 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Star field */
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: #fff;
+      border-radius: 50%;
+      animation: twinkle var(--duration) ease-in-out infinite;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+    /* Card hover glow */
+    .card-glow {
+      transition: all 0.3s ease;
+    }
+    .card-glow:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(34, 197, 94, 0.15);
+    }
+
+    /* Hype bar animation on scroll */
+    .hype-bar-fill {
+      width: 0%;
+      transition: width 1.5s ease-out;
+    }
+    .hype-bar-fill.animated {
+      /* set via JS */
+    }
+
+    /* Mobile nav */
+    .mobile-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease-out;
+    }
+    .mobile-menu.open {
+      max-height: 400px;
+    }
+
+    /* Trivia option hover */
+    .trivia-option {
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+    .trivia-option:hover {
+      border-color: #22c55e;
+      background: rgba(34, 197, 94, 0.1);
+      transform: translateX(4px);
+    }
+
+    /* B2B card */
+    .b2b-card {
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .b2b-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.05), transparent);
+      transition: left 0.5s ease;
+    }
+    .b2b-card:hover::before {
+      left: 100%;
+    }
+
+    /* Testimonial carousel dots */
+    .dot.active {
+      background: #22c55e !important;
+      width: 24px !important;
+    }
+
+    /* Confetti overlay for trivia correct */
+    .confetti-piece {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      z-index: 9999;
+      pointer-events: none;
+      animation: confettiFall var(--fall-duration, 3s) ease-out forwards;
+    }
+    @keyframes confettiFall {
+      0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* Match countdown flip */
+    .flip-card {
+      perspective: 1000px;
+    }
+    .flip-card-inner {
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+
+    /* Smooth section reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease-out;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body class="dark">
+
+  <!-- Star Field Background -->
+  <div class="stars" id="starField"></div>
+
+  <!-- ============================================================ -->
+  <!-- NAVIGATION                                                   -->
+  <!-- ============================================================ -->
+  <nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-lg bg-slate-950/70 border-b border-slate-800/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 md:h-20">
+        <!-- Logo -->
+        <a href="#" class="flex items-center gap-2 group">
+          <span class="text-2xl md:text-3xl">⚽</span>
+          <div>
+            <span class="text-lg md:text-xl font-bold bg-gradient-to-r from-emerald-400 to-emerald-200 bg-clip-text text-transparent">Predictor King</span>
+            <span class="hidden sm:inline text-xs text-slate-500 ml-2 font-medium">2026</span>
+          </div>
+        </a>
+
+        <!-- Desktop nav -->
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#predictor" class="text-sm font-medium text-slate-300 hover:text-emerald-400 transition-colors">Predictor</a>
+          <a href="#trivia" class="text-sm font-medium text-slate-300 hover:text-emerald-400 transition-colors">Trivia</a>
+          <a href="#hype" class="text-sm font-medium text-slate-300 hover:text-emerald-400 transition-colors">Hype-Meter</a>
+          <a href="#b2b" class="text-sm font-medium text-slate-300 hover:text-emerald-400 transition-colors">For Partners</a>
+          <a href="#buy-crypto" class="text-sm font-medium text-slate-300 hover:text-emerald-400 transition-colors">Buy Crypto</a>
+          <a href="#devvit" class="text-sm font-medium text-slate-300 hover:text-emerald-400 transition-colors">Devvit</a>
+          <a href="#get-started"
+             class="px-5 py-2.5 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 transition-all duration-300">
+            Get Started
+          </a>
+        </div>
+
+        <!-- Mobile menu button -->
+        <button id="menuToggle" class="md:hidden p-2 rounded-lg hover:bg-slate-800 transition-colors" aria-label="Toggle menu">
+          <svg class="w-6 h-6 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div class="mobile-menu md:hidden border-t border-slate-800/50" id="mobileMenu">
+      <div class="px-4 py-3 space-y-2">
+        <a href="#predictor" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-emerald-400 transition-all">Predictor</a>
+        <a href="#trivia" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-emerald-400 transition-all">Trivia</a>
+        <a href="#hype" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-emerald-400 transition-all">Hype-Meter</a>
+        <a href="#b2b" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-emerald-400 transition-all">For Partners</a>
+        <a href="#buy-crypto" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-emerald-400 transition-all">Buy Crypto</a>
+        <a href="#devvit" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-emerald-400 transition-all">Devvit</a>
+        <a href="#get-started"
+           class="block px-4 py-2.5 rounded-lg text-sm font-semibold text-center text-white bg-gradient-to-r from-emerald-600 to-emerald-500">
+          Get Started
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================================================ -->
+  <!-- HERO SECTION                                                 -->
+  <!-- ============================================================ -->
+  <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <!-- Gradient overlay -->
+    <div class="absolute inset-0 bg-gradient-animated opacity-80"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(34,197,94,0.08)_0%,_transparent_70%)]"></div>
+
+    <!-- Decorative circles -->
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl animate-float"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-ice-500/5 rounded-full blur-3xl animate-float" style="animation-delay: -3s;"></div>
+
+    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold tracking-wider uppercase mb-8 animate-fade-in">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        North America 2026
+      </div>
+
+      <!-- Main heading -->
+      <h1 class="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black leading-none tracking-tight mb-6 animate-slide-up">
+        <span class="bg-gradient-to-r from-white via-emerald-200 to-emerald-400 bg-clip-text text-transparent">
+          Predictor<br class="sm:hidden" /> King
+        </span>
+      </h1>
+
+      <p class="max-w-2xl mx-auto text-lg sm:text-xl md:text-2xl text-slate-400 font-light mb-8 animate-slide-up" style="animation-delay: 0.1s;">
+        Predict every match. Clash in live trivia. <br class="hidden sm:block" />
+        Track the <span class="text-emerald-400 font-semibold">hype</span> in real time.
+      </p>
+
+      <!-- Match countdown clock -->
+      <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 mb-10 animate-slide-up" style="animation-delay: 0.2s;">
+        <div class="px-5 py-3 rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-700/50 text-center min-w-[80px]">
+          <div class="text-3xl sm:text-4xl font-black text-emerald-400 countdown-number" id="countdownDays">12</div>
+          <div class="text-xs text-slate-500 font-medium uppercase tracking-widest mt-1">Days</div>
+        </div>
+        <div class="text-2xl text-slate-600 font-bold">:</div>
+        <div class="px-5 py-3 rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-700/50 text-center min-w-[80px]">
+          <div class="text-3xl sm:text-4xl font-black text-emerald-400 countdown-number" id="countdownHours">18</div>
+          <div class="text-xs text-slate-500 font-medium uppercase tracking-widest mt-1">Hours</div>
+        </div>
+        <div class="text-2xl text-slate-600 font-bold">:</div>
+        <div class="px-5 py-3 rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-700/50 text-center min-w-[80px]">
+          <div class="text-3xl sm:text-4xl font-black text-emerald-400 countdown-number" id="countdownMinutes">42</div>
+          <div class="text-xs text-slate-500 font-medium uppercase tracking-widest mt-1">Mins</div>
+        </div>
+        <div class="text-2xl text-slate-600 font-bold">:</div>
+        <div class="px-5 py-3 rounded-2xl bg-slate-900/80 backdrop-blur-sm border border-slate-700/50 text-center min-w-[80px]">
+          <div class="text-3xl sm:text-4xl font-black text-emerald-400 countdown-number" id="countdownSeconds">30</div>
+          <div class="text-xs text-slate-500 font-medium uppercase tracking-widest mt-1">Secs</div>
+        </div>
+      </div>
+
+      <!-- CTA buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-slide-up" style="animation-delay: 0.3s;">
+        <a href="#predictor"
+           class="group relative px-8 py-4 rounded-full text-base font-bold text-white bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 shadow-xl shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all duration-300 w-full sm:w-auto text-center">
+          <span class="relative z-10">⚽ Start Predicting</span>
+          <div class="absolute inset-0 rounded-full bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        </a>
+        <a href="#trivia"
+           class="group px-8 py-4 rounded-full text-base font-semibold text-slate-300 border border-slate-700 hover:border-emerald-500/50 hover:text-emerald-400 transition-all duration-300 w-full sm:w-auto text-center">
+          🧠 Play Trivia
+          <span class="inline-block ml-1 group-hover:translate-x-1 transition-transform">→</span>
+        </a>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+        <svg class="w-6 h-6 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- PREDICTOR SECTION                                            -->
+  <!-- ============================================================ -->
+  <section id="predictor" class="relative py-24 sm:py-32">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="reveal">
+        <div class="text-center mb-16">
+          <span class="inline-block px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold tracking-wider uppercase mb-4">⚽ Core Feature</span>
+          <h2 class="text-4xl sm:text-5xl font-black text-white mb-4">Match Predictor</h2>
+          <p class="max-w-xl mx-auto text-slate-400 text-lg">Lock in your score predictions, climb the global leaderboard, and earn bragging rights across Reddit.</p>
+        </div>
+      </div>
+
+      <!-- Predictor Interactive Demo -->
+      <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <!-- Interactive Match Selector -->
+        <div class="reveal space-y-4">
+          <div class="rounded-2xl bg-slate-900/60 backdrop-blur-sm border border-slate-800/80 p-6 card-glow">
+            <h3 class="text-lg font-bold text-white mb-4">📅 Upcoming Matches</h3>
+            <div class="space-y-2" id="matchList">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- Score Predictor Mini -->
+          <div class="rounded-2xl bg-slate-900/60 backdrop-blur-sm border border-slate-800/80 p-6 card-glow" id="scorePredictor">
+            <h3 class="text-lg font-bold text-white mb-3">🔮 Your Prediction</h3>
+            <div id="predictionDisplay" class="text-center">
+              <p class="text-slate-400 text-sm">Select a match above to predict the score</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Leaderboard Preview -->
+        <div class="reveal" style="transition-delay: 0.1s;">
+          <div class="rounded-2xl bg-gradient-to-br from-emerald-900/20 to-slate-900/60 backdrop-blur-sm border border-emerald-800/30 p-6 card-glow">
+            <div class="flex items-center justify-between mb-6">
+              <h3 class="text-lg font-bold text-white">🏆 Top Predictors</h3>
+              <span class="text-xs text-slate-500">14-day rolling</span>
+            </div>
+            <div class="space-y-3" id="leaderboardList">
+              <!-- Leaderboard data populated by JS -->
+              <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-800/50">
+                <span class="w-8 h-8 flex items-center justify-center rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 text-black text-sm font-bold">1</span>
+                <div>
+                  <p class="text-sm font-semibold text-white">u/GoalGetter</p>
+                  <p class="text-xs text-slate-500">56 correct predictions</p>
+                </div>
+                <span class="ml-auto text-emerald-400 font-bold">2,450 pts</span>
+              </div>
+              <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-800/30">
+                <span class="w-8 h-8 flex items-center justify-center rounded-full bg-gradient-to-br from-slate-300 to-slate-500 text-black text-sm font-bold">2</span>
+                <div>
+                  <p class="text-sm font-semibold text-white">u/SoccerWizard</p>
+                  <p class="text-xs text-slate-500">48 correct predictions</p>
+                </div>
+                <span class="ml-auto text-emerald-400 font-bold">2,120 pts</span>
+              </div>
+              <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-800/30">
+                <span class="w-8 h-8 flex items-center justify-center rounded-full bg-gradient-to-br from-amber-700 to-amber-900 text-white text-sm font-bold">3</span>
+                <div>
+                  <p class="text-sm font-semibold text-white">u/FootyFanatic</p>
+                  <p class="text-xs text-slate-500">42 correct predictions</p>
+                </div>
+                <span class="ml-auto text-emerald-400 font-bold">1,890 pts</span>
+              </div>
+              <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-800/20">
+                <span class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-700 text-slate-300 text-sm font-bold">4</span>
+                <div>
+                  <p class="text-sm font-semibold text-white">u/WorldCupKing</p>
+                  <p class="text-xs text-slate-500">39 correct predictions</p>
+                </div>
+                <span class="ml-auto text-emerald-400 font-bold">1,670 pts</span>
+              </div>
+              <div class="flex items-center gap-3 p-3 rounded-xl bg-slate-800/20">
+                <span class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-700 text-slate-300 text-sm font-bold">5</span>
+                <div>
+                  <p class="text-sm font-semibold text-white">u/PenaltyHero</p>
+                  <p class="text-xs text-slate-500">35 correct predictions</p>
+                </div>
+                <span class="ml-auto text-emerald-400 font-bold">1,430 pts</span>
+              </div>
+            </div>
+            <div class="mt-4 pt-4 border-t border-slate-700/50">
+              <p class="text-xs text-slate-500 text-center">Your rank updates in real-time as predictions roll in</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- TRIVIA CLASH SECTION                                         -->
+  <!-- ============================================================ -->
+  <section id="trivia" class="relative py-24 sm:py-32 bg-gradient-to-b from-transparent via-slate-900/30 to-transparent">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="reveal">
+        <div class="text-center mb-16">
+          <span class="inline-block px-3 py-1 rounded-full bg-ice-500/10 border border-ice-500/20 text-ice-400 text-xs font-semibold tracking-wider uppercase mb-4">🧠 Live Feature</span>
+          <h2 class="text-4xl sm:text-5xl font-black text-white mb-4">Live Trivia Clash</h2>
+          <p class="max-w-xl mx-auto text-slate-400 text-lg">Subreddit vs subreddit. 5 rapid-fire questions. 15 seconds per question. Every correct answer earns points for your community.</p>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+        <!-- Interactive Trivia Demo -->
+        <div class="reveal">
+          <div class="rounded-2xl bg-gradient-to-br from-slate-900/80 to-slate-800/50 backdrop-blur-sm border border-slate-700/60 p-6 card-glow" id="triviaDemo">
+            <!-- Trivia Header -->
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <h3 class="text-lg font-bold text-white">⚽ Trivia Clash</h3>
+                <p class="text-xs text-slate-500" id="triviaProgress">Question 1 of 5</p>
+              </div>
+              <div class="text-right">
+                <span class="text-sm text-slate-400">Score</span>
+                <p class="text-2xl font-black text-emerald-400" id="triviaScore">0</p>
+              </div>
+            </div>
+
+            <!-- Timer Bar -->
+            <div class="mb-6">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs text-slate-500">⏱ Time</span>
+                <span class="text-xs font-mono text-slate-400" id="triviaTimer">15s</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-slate-700 overflow-hidden">
+                <div class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-emerald-400 transition-all duration-1000 ease-linear" id="triviaTimerBar" style="width: 100%;"></div>
+              </div>
+            </div>
+
+            <!-- Question -->
+            <div class="mb-6 p-4 rounded-xl bg-slate-800/50 border border-slate-700/30">
+              <p class="text-xs text-ice-400 font-semibold uppercase tracking-wider mb-2" id="triviaTag">HISTORY</p>
+              <p class="text-white font-semibold text-lg leading-relaxed" id="triviaQuestion">
+                Which country has won the most World Cup titles?
+              </p>
+            </div>
+
+            <!-- Options -->
+            <div class="space-y-2.5" id="triviaOptions">
+              <!-- Populated by JS -->
+            </div>
+
+            <!-- Feedback -->
+            <div id="triviaFeedback" class="mt-4 hidden">
+              <div class="p-3 rounded-xl text-sm font-semibold text-center transition-all" id="triviaFeedbackContent"></div>
+            </div>
+
+            <!-- Controls -->
+            <div class="mt-6 flex gap-3">
+              <button id="triviaNextBtn"
+                      class="hidden flex-1 px-5 py-3 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 transition-all shadow-lg shadow-emerald-500/20">
+                Next Question →
+              </button>
+              <button id="triviaRestartBtn"
+                      class="hidden flex-1 px-5 py-3 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-ice-600 to-ice-500 hover:from-ice-500 hover:to-ice-400 transition-all shadow-lg shadow-ice-500/20">
+                🔄 Play Again
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature Highlights -->
+        <div class="reveal space-y-6" style="transition-delay: 0.1s;">
+          <div class="rounded-2xl bg-slate-900/60 backdrop-blur-sm border border-slate-800/80 p-6 card-glow">
+            <div class="flex items-start gap-4">
+              <span class="text-2xl">🏆</span>
+              <div>
+                <h4 class="text-white font-bold mb-1">Subreddit vs Subreddit</h4>
+                <p class="text-sm text-slate-400">Every correct answer contributes to your subreddit's leaderboard rank. The community with the most points at the end of the tournament wins eternal glory.</p>
+              </div>
+            </div>
+          </div>
+          <div class="rounded-2xl bg-slate-900/60 backdrop-blur-sm border border-slate-800/80 p-6 card-glow">
+            <div class="flex items-start gap-4">
+              <span class="text-2xl">⚡</span>
+              <div>
+                <h4 class="text-white font-bold mb-1">Speed &amp; Accuracy</h4>
+                <p class="text-sm text-slate-400">15 seconds per question. Answer fast, answer right. The quicker you respond, the more bonus points you earn for your subreddit.</p>
+              </div>
+            </div>
+          </div>
+          <div class="rounded-2xl bg-slate-900/60 backdrop-blur-sm border border-slate-800/80 p-6 card-glow">
+            <div class="flex items-start gap-4">
+              <span class="text-2xl">📚</span>
+              <div>
+                <h4 class="text-white font-bold mb-1">100+ Questions</h4>
+                <p class="text-sm text-slate-400">Categories span World Cup history, records, iconic players, North American venues, and tournament trivia. New questions added weekly.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- PayPal / Payout Webhook Placeholder -->
+          <div class="rounded-2xl bg-gradient-to-r from-emerald-900/20 to-ice-900/20 border border-emerald-800/30 p-5">
+            <div class="flex items-center gap-3">
+              <span class="text-xl">💸</span>
+              <div class="flex-1">
+                <p class="text-sm font-semibold text-white">Webhook: Payout System</p>
+                <p class="text-xs text-slate-400 font-mono mt-0.5">POST /api/webhooks/paypal/payout</p>
+              </div>
+              <span class="px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-400 text-xs font-mono">ready</span>
+            </div>
+            <p class="text-xs text-slate-500 mt-2 ml-9">Top predictor and trivia champion rewards are disbursed automatically via PayPal payout webhook.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- HYPE-METER SECTION                                           -->
+  <!-- ============================================================ -->
+  <section id="hype" class="relative py-24 sm:py-32">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="reveal">
+        <div class="text-center mb-16">
+          <span class="inline-block px-3 py-1 rounded-full bg-hype-500/10 border border-hype-500/20 text-hype-400 text-xs font-semibold tracking-wider uppercase mb-4">📊 Live Data</span>
+          <h2 class="text-4xl sm:text-5xl font-black text-white mb-4">Hype-Meter Dashboard</h2>
+          <p class="max-w-xl mx-auto text-slate-400 text-lg">Real-time community sentiment analysis for every World Cup 2026 match. See what Reddit is saying, track the vibe, and discover trending topics.</p>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-5 gap-8">
+        <!-- Match Selector Sidebar -->
+        <div class="lg:col-span-2 reveal space-y-4">
+          <div class="rounded-2xl bg-slate-900/60 backdrop-blur-sm border border-slate-800/80 p-5 card-glow">
+            <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-4">📋 Select Match</h3>
+            <div class="space-y-2" id="hypeMatchList">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- AI Summary Placeholder -->
+          <div class="rounded-2xl bg-gradient-to-br from-slate-900/60 to-slate-800/30 backdrop-blur-sm border border-slate-800/80 p-5 card-glow">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="w-5 h-5 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-[10px]">AI</span>
+              <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Match Intelligence</span>
+            </div>
+            <p class="text-sm text-slate-300 leading-relaxed" id="hypeSummary">
+              Select a match to see the AI-generated community sentiment summary, powered by real-time Reddit analysis.
+            </p>
+          </div>
+        </div>
+
+        <!-- Main Hype Dashboard -->
+        <div class="lg:col-span-3 reveal space-y-6" style="transition-delay: 0.1s;">
+          <!-- Hype Gauge -->
+          <div class="rounded-2xl bg-gradient-to-br from-slate-900/80 to-slate-800/40 backdrop-blur-sm border border-slate-700/60 p-6 card-glow">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-bold text-white" id="hypeMatchTitle">USA vs Canada</h3>
+              <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-semibold" id="hypeMatchStatus">UPCOMING</span>
+            </div>
+
+            <div class="text-center mb-2">
+              <span class="text-4xl font-black text-white" id="hypeScore">72</span>
+              <span class="text-slate-500 text-lg font-medium">/100</span>
+            </div>
+            <p class="text-center text-sm font-semibold text-hype-400 mb-6" id="hypeLabel">⚡ HYPED!</p>
+
+            <div class="w-full h-4 rounded-full bg-slate-700 overflow-hidden">
+              <div class="h-full rounded-full bg-gradient-to-r from-emerald-500 via-hype-500 to-red-500 hype-bar-fill animated"
+                   id="hypeBar" style="width: 72%;"></div>
+            </div>
+          </div>
+
+          <!-- Stats Grid -->
+          <div class="grid grid-cols-3 gap-4">
+            <div class="rounded-xl bg-slate-900/60 backdrop-blur-sm border border-slate-800/80 p-4 text-center card-glow">
+              <p class="text-2xl sm:text-3xl font-black text-white" id="hypeComments">12,847</p>
+              <p class="text-xs text-slate-500 mt-1">Comments</p>
+            </div>
+            <div class="rounded-xl bg-slate-900/60 backdrop-blur-sm border border-slate-800/80 p-4 text-center card-glow">
+              <p class="text-2xl sm:text-3xl font-black text-emerald-400" id="hypePositive">68%</p>
+              <p class="text-xs text-slate-500 mt-1">Positive</p>
+            </div>
+            <div class="rounded-xl bg-slate-900/60 backdrop-blur-sm border border-slate-800/80 p-4 text-center card-glow">
+              <p class="text-2xl sm:text-3xl font-black text-red-400" id="hypeNegative">12%</p>
+              <p class="text-xs text-slate-500 mt-1">Negative</p>
+            </div>
+          </div>
+
+          <!-- Sentiment Bar -->
+          <div class="rounded-2xl bg-slate-900/60 backdrop-blur-sm border border-slate-800/80 p-5 card-glow">
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Community Sentiment</p>
+            <div class="w-full h-3 rounded-full bg-slate-700 overflow-hidden flex">
+              <div class="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-l-full" id="sentimentPositive" style="width: 68%;"></div>
+              <div class="h-full bg-gradient-to-r from-slate-600 to-slate-500" id="sentimentNeutral" style="width: 20%;"></div>
+              <div class="h-full bg-gradient-to-r from-red-500 to-red-400 rounded-r-full" id="sentimentNegative" style="width: 12%;"></div>
+            </div>
+            <div class="flex justify-between mt-2 text-xs">
+              <span class="text-emerald-400 font-medium">😊 Positive 68%</span>
+              <span class="text-slate-400">😐 Neutral 20%</span>
+              <span class="text-red-400 font-medium">😡 Negative 12%</span>
+            </div>
+          </div>
+
+          <!-- Trending Keywords -->
+          <div class="rounded-2xl bg-slate-900/60 backdrop-blur-sm border border-slate-800/80 p-5 card-glow">
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">🔥 Trending Keywords</p>
+            <div class="flex flex-wrap gap-2" id="hypeKeywords">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- B2B LEAD GENERATION SECTION                                  -->
+  <!-- ============================================================ -->
+  <section id="b2b" class="relative py-24 sm:py-32 bg-gradient-to-b from-transparent via-slate-900/40 to-transparent">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="reveal">
+        <div class="text-center mb-16">
+          <span class="inline-block px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold tracking-wider uppercase mb-4">🏗️ B2B Partner Program</span>
+          <h2 class="text-4xl sm:text-5xl font-black text-white mb-4">Power Your Business with Sports-Driven Leads</h2>
+          <p class="max-w-2xl mx-auto text-slate-400 text-lg">Our upscaled OSINT engine generates high-intent contractor leads across 5 service niches. The World Cup audience is your next customer base.</p>
+        </div>
+      </div>
+
+      <!-- Niche Cards -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-16 reveal">
+        <!-- Roofing -->
+        <div class="b2b-card rounded-2xl bg-slate-900/60 backdrop-blur-sm border border-slate-800/80 p-5 text-center group hover:border-emerald-700/40">
+          <div class="text-3xl mb-3">🏠</div>
+          <h4 class="text-white font-bold mb-1">Roofing</h4>
+          <p class="text-xs text-slate-500 mb-3">Storm damage + seasonal leads</p>
+          <div class="flex items-center justify-center gap-1 text-sm">
+            <span class="text-emerald-400 font-bold">8,247</span>
+            <span class="text-slate-500">leads</span>
+          </div>
+          <div class="mt-2 w-full h-1.5 rounded-full bg-slate-700 overflow-hidden">
+            <div class="h-full rounded-full bg-emerald-500" style="width: 78%;"></div>
+          </div>
+          <p class="text-xs text-slate-600 mt-1">78% conversion rate</p>
+        </div>
+
+        <!-- Glass Repair -->
+        <div class="b2b-card rounded-2xl bg-slate-900/60 backdrop-blur-sm border border-slate-800/80 p-5 text-center group hover:border-ice-700/40">
+          <div class="text-3xl mb-3">🪟</div>
+          <h4 class="text-white font-bold mb-1">Glass Repair</h4>
+          <p class="text-xs text-slate-500 mb-3">Residential &amp; commercial</p>
+          <div class="flex items-center justify-center gap-1 text-sm">
+            <span class="text-emerald-400 font-bold">6,513</span>
+            <span class="text-slate-500">leads</span>
+          </div>
+          <div class="mt-2 w-full h-1.5 rounded-full bg-slate-700 overflow-hidden">
+            <div class="h-full rounded-full bg-ice-500" style="width: 65%;"></div>
+          </div>
+          <p class="text-xs text-slate-600 mt-1">65% conversion rate</p>
+        </div>
+
+        <!-- Water Damage -->
+        <div class="b2b-card rounded-2xl bg-slate-900/60 backdrop-blur-sm border border-slate-800/80 p-5 text-center group hover:border-emerald-700/40">
+          <div class="text-3xl mb-3">💧</div>
+          <h4 class="text-white font-bold mb-1">Water Damage</h4>
+          <p class="text-xs text-slate-500 mb-3">Emergency restoration</p>
+          <div class="flex items-center justify-center gap-1 text-sm">
+            <span class="text-emerald-400 font-bold">5,892</span>
+            <span class="text-slate-500">leads</span>
+          </div>
+          <div class="mt-2 w-full h-1.5 rounded-full bg-slate-700 overflow-hidden">
+            <div class="h-full rounded-full bg-emerald-500" style="width: 72%;"></div>
+          </div>
+          <p class="text-xs text-slate-600 mt-1">72% conversion rate</p>
+        </div>
+
+        <!-- Tree Removal -->
+        <div class="b2b-card rounded-2xl bg-slate-900/60 backdrop-blur-sm border border-slate-800/80 p-5 text-center group hover:border-emerald-700/40">
+          <div class="text-3xl mb-3">🌳</div>
+          <h4 class="text-white font-bold mb-1">Tree Removal</h4>
+          <p class="text-xs text-slate-500 mb-3">Storm prep &amp; land clearing</p>
+          <div class="flex items-center justify-center gap-1 text-sm">
+            <span class="text-emerald-400 font-bold">4,728</span>
+            <span class="text-slate-500">leads</span>
+          </div>
+          <div class="mt-2 w-full h-1.5 rounded-full bg-slate-700 overflow-hidden">
+            <div class="h-full rounded-full bg-emerald-500" style="width: 59%;"></div>
+          </div>
+          <p class="text-xs text-slate-600 mt-1">59% conversion rate</p>
+        </div>
+
+        <!-- General Contracting -->
+        <div class="b2b-card rounded-2xl bg-slate-900/60 backdrop-blur-sm border border-slate-800/80 p-5 text-center group hover:border-emerald-700/40">
+          <div class="text-3xl mb-3">🔨</div>
+          <h4 class="text-white font-bold mb-1">General Contracting</h4>
+          <p class="text-xs text-slate-500 mb-3">Full-service construction</p>
+          <div class="flex items-center justify-center gap-1 text-sm">
+            <span class="text-emerald-400 font-bold">9,341</span>
+            <span class="text-slate-500">leads</span>
+          </div>
+          <div class="mt-2 w-full h-1.5 rounded-full bg-slate-700 overflow-hidden">
+            <div class="h-full rounded-full bg-emerald-500" style="width: 85%;"></div>
+          </div>
+          <p class="text-xs text-slate-600 mt-1">85% conversion rate</p>
+        </div>
+      </div>
+
+      <!-- B2B Stats + CTA -->
+      <div class="grid lg:grid-cols-2 gap-8 reveal">
+        <div class="rounded-2xl bg-slate-900/60 backdrop-blur-sm border border-slate-800/80 p-8 card-glow">
+          <h3 class="text-2xl font-bold text-white mb-6">📊 Lead Generation Engine</h3>
+          <div class="space-y-5">
+            <div class="flex items-center justify-between">
+              <span class="text-slate-400">Total Leads Generated</span>
+              <span class="text-white font-bold text-xl">34,721</span>
+            </div>
+            <div class="w-full h-2 rounded-full bg-slate-700 overflow-hidden">
+              <div class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-emerald-400" style="width: 73%;"></div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <p class="text-xs text-slate-500">Active Niches</p>
+                <p class="text-white font-bold text-lg">5</p>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500">Cities/States Covered</p>
+                <p class="text-white font-bold text-lg">48</p>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500">CSV Exports</p>
+                <p class="text-white font-bold text-lg">Real-time</p>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500">Dup. Detection</p>
+                <p class="text-white font-bold text-lg">99.7%</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl bg-gradient-to-br from-emerald-900/20 to-slate-900/60 backdrop-blur-sm border border-emerald-800/30 p-8 card-glow flex flex-col justify-center">
+          <h3 class="text-2xl font-bold text-white mb-4">🚀 Become a Partner</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-6">
+            Integrate our lead generation pipeline with your CRM. Our OSINT engine scans Reddit, social media,
+            and public records to find high-intent customers for roofing, glass repair, water damage restoration,
+            tree removal, and general contracting.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <a href="#get-started"
+               class="px-6 py-3 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 transition-all text-center shadow-lg shadow-emerald-500/20">
+              📥 Download Sample CSV
+            </a>
+            <a href="#devvit"
+               class="px-6 py-3 rounded-xl text-sm font-semibold text-slate-300 border border-slate-700 hover:border-emerald-500/50 hover:text-emerald-400 transition-all text-center">
+              API Documentation →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- DEVVIT INTEGRATION SECTION                                    -->
+  <!-- ============================================================ -->
+  <section id="devvit" class="relative py-24 sm:py-32">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="reveal">
+        <div class="text-center mb-16">
+          <span class="inline-block px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold tracking-wider uppercase mb-4">🔌 Platform Integration</span>
+          <h2 class="text-4xl sm:text-5xl font-black text-white mb-4">Devvit Custom Post Components</h2>
+          <p class="max-w-xl mx-auto text-slate-400 text-lg">Deploy interactive World Cup experiences directly into your subreddit. Three powerful Devvit apps, zero setup friction.</p>
+        </div>
+      </div>
+
+      <div class="grid sm:grid-cols-3 gap-6 reveal">
+        <!-- Predictor App -->
+        <div class="rounded-2xl bg-slate-900/60 backdrop-blur-sm border border-slate-800/80 p-6 card-glow text-center group">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+            ⚽
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Predictor Post</h3>
+          <p class="text-sm text-slate-400 mb-4">Full match schedule, live score predictions, global leaderboard, and per-user prediction history. All backed by Redis.</p>
+          <div class="flex flex-wrap gap-2 justify-center mb-4">
+            <span class="px-2 py-1 rounded-md bg-slate-800 text-xs text-slate-400 font-mono">useAsync</span>
+            <span class="px-2 py-1 rounded-md bg-slate-800 text-xs text-slate-400 font-mono">Redis</span>
+            <span class="px-2 py-1 rounded-md bg-slate-800 text-xs text-slate-400 font-mono">Leaderboard</span>
+          </div>
+          <div class="text-xs text-slate-500">
+            <!-- Devvit Custom Post Placeholder -->
+            <span class="px-3 py-1.5 rounded-full bg-emerald-500/5 text-emerald-400/60 text-xs font-mono">&lt;Devvit custom-post="predictor" /&gt;</span>
+          </div>
+        </div>
+
+        <!-- Trivia App -->
+        <div class="rounded-2xl bg-slate-900/60 backdrop-blur-sm border border-slate-800/80 p-6 card-glow text-center group">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-ice-500/20 to-ice-600/10 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+            🧠
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Trivia Clash Post</h3>
+          <p class="text-sm text-slate-400 mb-4">5-question timed trivia sessions. Subreddit-vs-subreddit scoring. 15-second timer, instant feedback, and replayability.</p>
+          <div class="flex flex-wrap gap-2 justify-center mb-4">
+            <span class="px-2 py-1 rounded-md bg-slate-800 text-xs text-slate-400 font-mono">Timer</span>
+            <span class="px-2 py-1 rounded-md bg-slate-800 text-xs text-slate-400 font-mono">Sessions</span>
+            <span class="px-2 py-1 rounded-md bg-slate-800 text-xs text-slate-400 font-mono">Scoring</span>
+          </div>
+          <div class="text-xs text-slate-500">
+            <span class="px-3 py-1.5 rounded-full bg-emerald-500/5 text-emerald-400/60 text-xs font-mono">&lt;Devvit custom-post="trivia" /&gt;</span>
+          </div>
+        </div>
+
+        <!-- Hype-Meter App -->
+        <div class="rounded-2xl bg-slate-900/60 backdrop-blur-sm border border-slate-800/80 p-6 card-glow text-center group">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-hype-500/20 to-hype-600/10 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+            📊
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">Hype-Meter Post</h3>
+          <p class="text-sm text-slate-400 mb-4">Real-time sentiment analysis, hype gauges, trending keywords, and AI-generated match summaries for every World Cup fixture.</p>
+          <div class="flex flex-wrap gap-2 justify-center mb-4">
+            <span class="px-2 py-1 rounded-md bg-slate-800 text-xs text-slate-400 font-mono">Sentiment</span>
+            <span class="px-2 py-1 rounded-md bg-slate-800 text-xs text-slate-400 font-mono">AI Summary</span>
+            <span class="px-2 py-1 rounded-md bg-slate-800 text-xs text-slate-400 font-mono">Keywords</span>
+          </div>
+          <div class="text-xs text-slate-500">
+            <span class="px-3 py-1.5 rounded-full bg-emerald-500/5 text-emerald-400/60 text-xs font-mono">&lt;Devvit custom-post="hypermeter" /&gt;</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Devvit + PayPal Placeholder Row -->
+      <div class="mt-8 grid sm:grid-cols-2 gap-6 reveal">
+        <div class="rounded-2xl bg-slate-900/60 backdrop-blur-sm border border-slate-800/80 p-5 card-glow flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 flex items-center justify-center text-xl flex-shrink-0">
+            🔗
+          </div>
+          <div>
+            <p class="text-sm font-semibold text-white">Devvit Router Integration</p>
+            <p class="text-xs text-slate-400 font-mono mt-0.5">POST /api/webhooks/devvit/install • POST /api/webhooks/devvit/upgrade</p>
+            <p class="text-xs text-slate-500 mt-1">Automatically install Predictor, Trivia, and Hype-Meter into your subreddit with one click.</p>
+          </div>
+        </div>
+        <div class="rounded-2xl bg-slate-900/60 backdrop-blur-sm border border-slate-800/80 p-5 card-glow flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-500/20 to-yellow-600/10 flex items-center justify-center text-xl flex-shrink-0">
+            💳
+          </div>
+          <div>
+            <p class="text-sm font-semibold text-white">Monetization &amp; Payouts</p>
+            <p class="text-xs text-slate-400 font-mono mt-0.5">POST /api/webhooks/paypal/verify • POST /api/webhooks/paypal/disburse</p>
+            <p class="text-xs text-slate-500 mt-1">Verified PayPal webhooks for automated reward distribution to top predictors and trivia champions.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- GET STARTED / CTA SECTION                                    -->
+  <!-- ============================================================ -->
+  <section id="get-started" class="relative py-24 sm:py-32 bg-gradient-to-b from-transparent via-slate-900/30 to-transparent">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal">
+      <span class="inline-block px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold tracking-wider uppercase mb-4">🚀 Launch</span>
+      <h2 class="text-4xl sm:text-5xl font-black text-white mb-4">Ready to Join the Action?</h2>
+      <p class="max-w-lg mx-auto text-slate-400 text-lg mb-10">
+        Install the Devvit apps on your subreddit, connect your PayPal for automated payouts, and start generating contractor leads — all from one platform.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+        <a href="#"
+           class="group relative px-8 py-4 rounded-full text-base font-bold text-white bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 shadow-xl shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all duration-300 w-full sm:w-auto text-center">
+          <span class="relative z-10">⚡ Install on Your Subreddit</span>
+          <div class="absolute inset-0 rounded-full bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        </a>
+        <a href="#"
+           class="px-8 py-4 rounded-full text-base font-semibold text-slate-300 border border-slate-700 hover:border-emerald-500/50 hover:text-emerald-400 transition-all duration-300 w-full sm:w-auto text-center">
+          📖 View Documentation
+        </a>
+      </div>
+
+      <!-- Feature Grid Footer -->
+      <div class="grid sm:grid-cols-3 gap-6 max-w-2xl mx-auto">
+        <div class="p-4 rounded-xl bg-slate-900/40 backdrop-blur-sm border border-slate-800/50">
+          <p class="text-2xl font-black text-emerald-400">6</p>
+          <p class="text-xs text-slate-500 mt-1">World Cup Matches</p>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-900/40 backdrop-blur-sm border border-slate-800/50">
+          <p class="text-2xl font-black text-emerald-400">10+</p>
+          <p class="text-xs text-slate-500 mt-1">Trivia Categories</p>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-900/40 backdrop-blur-sm border border-slate-800/50">
+          <p class="text-2xl font-black text-emerald-400">5</p>
+          <p class="text-xs text-slate-500 mt-1">Contractor Niches</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- CHANGELY FIAT-ON-RAMP WIDGET                                 -->
+  <!-- ============================================================ -->
+  <section class="relative py-24 sm:py-32 bg-gradient-to-b from-transparent via-slate-900/40 to-transparent overflow-hidden" id="buy-crypto">
+    <!-- Decorative glow -->
+    <div class="absolute top-1/2 left-1/4 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-ice-500/5 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="flex flex-col items-center text-center mb-12 reveal">
+        <span class="inline-block px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold tracking-wider uppercase mb-4">&#9889; Instant Crypto</span>
+        <h2 class="text-4xl sm:text-5xl font-black text-white mb-4">Buy USDT With Your Card</h2>
+        <p class="max-w-xl mx-auto text-slate-400 text-lg">
+          Pay with Visa, Mastercard, Apple Pay or Google Pay. Funds land as USDT (TRC-20) directly to your wallet &mdash; zero friction.
+        </p>
+      </div>
+
+      <div class="flex justify-center reveal" style="transition-delay:0.1s">
+        <div class="w-full max-w-[500px] rounded-2xl bg-slate-900/70 backdrop-blur-sm border border-slate-700/50 shadow-2xl shadow-black/40 overflow-hidden transition-all duration-300 hover:border-emerald-700/30 hover:shadow-emerald-500/5">
+          <iframe
+            src="https://widget.changelly.com?from=usd&to=usdt&amount=100&fromDefault=usd&toDefault=usdt&merchant_id=2xqhrdsf1ttl0fli&v=3&type=no-rev-share&color=0d1117&headerId=1&logo=hide&buyButtonTextId=1"
+            class="w-full"
+            style="height: 660px; display: block; border: 0; background: transparent;"
+            title="Buy USDT with Credit Card via Changelly"
+            allow="camera; microphone; payment; clipboard-read; clipboard-write"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin">
+          </iframe>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 mt-8 text-xs text-slate-500 reveal" style="transition-delay:0.2s">
+        <span class="flex items-center gap-1.5"><svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Powered by Changelly</span>
+        <span class="flex items-center gap-1.5"><svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> 100+ payment methods</span>
+        <span class="flex items-center gap-1.5"><svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Best exchange rates</span>
+        <span class="flex items-center gap-1.5"><svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> USDT TRC-20 delivered</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mobile iframe height fix -->
+  <style>
+    @media (max-width: 600px) {
+      iframe[src*="changelly"] { height: 580px !important; }
+    }
+    @media (max-width: 380px) {
+      iframe[src*="changelly"] { height: 520px !important; }
+    }
+  </style>
+
+  <!-- ============================================================ -->
+  <!-- FOOTER                                                       -->
+  <!-- ============================================================ -->
+  <footer class="border-t border-slate-800/50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <span class="text-xl">⚽</span>
+            <span class="font-bold text-white">Predictor King</span>
+          </div>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            World Cup 2026 engagement analysis, live trivia, hype tracking, and B2B lead generation platform.
+            Built for Reddit communities and contractor businesses.
+          </p>
+        </div>
+        <div>
+          <h4 class="text-sm font-semibold text-white mb-3">Products</h4>
+          <ul class="space-y-2">
+            <li><a href="#predictor" class="text-xs text-slate-500 hover:text-emerald-400 transition-colors">Match Predictor</a></li>
+            <li><a href="#trivia" class="text-xs text-slate-500 hover:text-emerald-400 transition-colors">Live Trivia</a></li>
+            <li><a href="#hype" class="text-xs text-slate-500 hover:text-emerald-400 transition-colors">Hype-Meter</a></li>
+            <li><a href="#b2b" class="text-xs text-slate-500 hover:text-emerald-400 transition-colors">Lead Generation</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-sm font-semibold text-white mb-3">Developers</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-xs text-slate-500 hover:text-emerald-400 transition-colors">API Reference</a></li>
+            <li><a href="#" class="text-xs text-slate-500 hover:text-emerald-400 transition-colors">Devvit SDK</a></li>
+            <li><a href="#" class="text-xs text-slate-500 hover:text-emerald-400 transition-colors">Webhook Docs</a></li>
+            <li><a href="#" class="text-xs text-slate-500 hover:text-emerald-400 transition-colors">GitHub</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-sm font-semibold text-white mb-3">Company</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-xs text-slate-500 hover:text-emerald-400 transition-colors">About</a></li>
+            <li><a href="#" class="text-xs text-slate-500 hover:text-emerald-400 transition-colors">Privacy</a></li>
+            <li><a href="#" class="text-xs text-slate-500 hover:text-emerald-400 transition-colors">Terms</a></li>
+            <li><a href="#" class="text-xs text-slate-500 hover:text-emerald-400 transition-colors">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-slate-800/50 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-xs text-slate-600">
+          &copy; 2026 Predictor King. All rights reserved. Not affiliated with FIFA.
+        </p>
+        <div class="flex items-center gap-4">
+          <span class="text-xs text-slate-600">Made with ⚽ + 🧠 for Reddit &amp; contractors</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================ -->
+  <!-- JAVASCRIPT                                                   -->
+  <!-- ============================================================ -->
+  <script>
+    (function() {
+      'use strict';
+
+      // ---- STAR FIELD ----
+      const starField = document.getElementById('starField');
+      for (let i = 0; i < 120; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.width = (Math.random() * 2.5 + 1) + 'px';
+        star.style.height = star.style.width;
+        star.style.setProperty('--duration', (Math.random() * 4 + 2) + 's');
+        star.style.animationDelay = Math.random() * 5 + 's';
+        starField.appendChild(star);
+      }
+
+      // ---- MOBILE MENU ----
+      const menuToggle = document.getElementById('menuToggle');
+      const mobileMenu = document.getElementById('mobileMenu');
+      menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('open');
+      });
+      // Close on link click
+      mobileMenu.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('open');
+        });
+      });
+
+      // ---- COUNTDOWN TIMER ----
+      // Set countdown to a date ~12 days from now (June 2026 is typical)
+      const targetDate = new Date();
+      targetDate.setDate(targetDate.getDate() + 12);
+      targetDate.setHours(targetDate.getHours() + 18);
+      targetDate.setMinutes(targetDate.getMinutes() + 42);
+
+      function updateCountdown() {
+        const now = new Date();
+        let diff = targetDate - now;
+        if (diff < 0) diff = 0;
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById('countdownDays').textContent = String(days).padStart(2, '0');
+        document.getElementById('countdownHours').textContent = String(hours).padStart(2, '0');
+        document.getElementById('countdownMinutes').textContent = String(minutes).padStart(2, '0');
+        document.getElementById('countdownSeconds').textContent = String(seconds).padStart(2, '0');
+      }
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+
+      // ---- SCROLL REVEAL (Intersection Observer) ----
+      const revealElements = document.querySelectorAll('.reveal');
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+      );
+      revealElements.forEach((el) => revealObserver.observe(el));
+
+      // ---- MATCH DATA ----
+      const MATCHES = [
+        { id: 'match_001', home: 'USA', away: 'Canada', status: 'upcoming', hype: 72, comments: 12847, positive: 68, negative: 12, summary: 'The USA vs Canada rivalry is heating up! Fans are debating the starting XI and predicting a high-scoring affair. Key talking points: Pulišić\'s form, Davies\' pace, and the midfield battle.', keywords: ['WorldCup2026', 'USMNT', 'Canada', 'Pulisic', 'Davies', 'goal', 'CONCACAF', 'redcard'] },
+        { id: 'match_002', home: 'Mexico', away: 'Costa Rica', status: 'upcoming', hype: 58, comments: 8921, positive: 55, negative: 18, summary: 'Mexico vs Costa Rica — El Tri fans are confident after strong Concacaf Nations League performances. Key debate: Will the attack finally click?', keywords: ['Mexico', 'CostaRica', 'ElTri', 'CONCACAF', 'Ochoa', 'Navas', 'soccer'] },
+        { id: 'match_003', home: 'Brazil', away: 'Argentina', status: 'upcoming', hype: 95, comments: 32150, positive: 45, negative: 35, summary: 'The South American Superclásico! Fans are going wild over the Neymar vs Messi legacy debate. Historical rivalry at its finest.', keywords: ['Brazil', 'Argentina', 'Neymar', 'Messi', 'Superclasico', 'Copa', 'GOAT', 'rivalry'] },
+        { id: 'match_004', home: 'England', away: 'France', status: 'upcoming', hype: 81, comments: 19450, positive: 52, negative: 22, summary: 'A rematch of the 2022 quarterfinal. Fans are debating Kane vs Mbappé. Who will be the difference maker?', keywords: ['England', 'France', 'Kane', 'Mbappe', 'ThreeLions', 'LesBleus', 'WorldCup', 'rematch'] },
+        { id: 'match_005', home: 'Germany', away: 'Spain', status: 'upcoming', hype: 64, comments: 10320, positive: 60, negative: 15, summary: 'Tactical showdown! Young talents Musiala and Yamal are the talk of the match thread.', keywords: ['Germany', 'Spain', 'Musiala', 'Yamal', 'Bundesliga', 'LaLiga', 'tactics', 'youngstars'] },
+        { id: 'match_006', home: 'Portugal', away: 'Netherlands', status: 'upcoming', hype: 77, comments: 15680, positive: 58, negative: 16, summary: 'CR7\'s final World Cup? Dutch fans are buzzing about their generation of talent.', keywords: ['Portugal', 'Netherlands', 'Ronaldo', 'CR7', 'Dutch', 'Oranje', 'final', 'legend'] },
+      ];
+
+      // ---- PREDICTOR: Match List ----
+      const matchList = document.getElementById('matchList');
+      let selectedMatch = null;
+
+      function renderMatchList() {
+        matchList.innerHTML = '';
+        MATCHES.forEach((match, idx) => {
+          const btn = document.createElement('button');
+          btn.className =
+            `w-full flex items-center gap-3 p-3 rounded-xl text-left transition-all duration-200 ${
+              selectedMatch && selectedMatch.id === match.id
+                ? 'bg-emerald-500/10 border border-emerald-500/30'
+                : 'bg-slate-800/30 border border-transparent hover:bg-slate-800/60'
+            }`;
+          btn.innerHTML = `
+            <span class="text-lg">${getFlag(match.home)}</span>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-semibold text-white truncate">${match.home} vs ${match.away}</p>
+              <p class="text-xs text-slate-500">${match.status.toUpperCase()}</p>
+            </div>
+            <span class="text-xs text-slate-400 font-mono">Hype: ${match.hype}</span>
+          `;
+          btn.addEventListener('click', () => {
+            selectedMatch = match;
+            renderMatchList();
+            updatePrediction(match);
+          });
+          matchList.appendChild(btn);
+        });
+        // Select first match by default
+        if (!selectedMatch) {
+          selectedMatch = MATCHES[0];
+          renderMatchList();
+          updatePrediction(MATCHES[0]);
+        }
+      }
+
+      function getFlag(team) {
+        const flags = {
+          'USA': '🇺🇸', 'Canada': '🇨🇦', 'Mexico': '🇲🇽', 'Costa Rica': '🇨🇷',
+          'Brazil': '🇧🇷', 'Argentina': '🇦🇷', 'England': '🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'France': '🇫🇷',
+          'Germany': '🇩🇪', 'Spain': '🇪🇸', 'Portugal': '🇵🇹', 'Netherlands': '🇳🇱',
+        };
+        return flags[team] || '⚽';
+      }
+
+      function updatePrediction(match) {
+        const display = document.getElementById('predictionDisplay');
+        display.innerHTML = `
+          <div class="flex items-center justify-center gap-4 mb-3">
+            <div class="text-center">
+              <p class="text-2xl mb-1">${getFlag(match.home)}</p>
+              <p class="text-sm font-semibold text-white">${match.home}</p>
+              <p class="text-3xl font-black text-emerald-400 mt-1">2</p>
+            </div>
+            <p class="text-xl text-slate-500 font-bold">vs</p>
+            <div class="text-center">
+              <p class="text-2xl mb-1">${getFlag(match.away)}</p>
+              <p class="text-sm font-semibold text-white">${match.away}</p>
+              <p class="text-3xl font-black text-emerald-400 mt-1">1</p>
+            </div>
+          </div>
+          <div class="flex items-center justify-center gap-2">
+            <button class="px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-400 text-xs font-semibold hover:bg-emerald-500/20 transition-colors">−</button>
+            <button class="px-6 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-500 text-white text-sm font-bold hover:from-emerald-500 hover:to-emerald-400 transition-all shadow-lg shadow-emerald-500/20">
+              🔮 Lock Prediction
+            </button>
+            <button class="px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-400 text-xs font-semibold hover:bg-emerald-500/20 transition-colors">+</button>
+          </div>
+          <p class="text-xs text-slate-500 mt-3">Adjust score and lock in your prediction</p>
+        `;
+      }
+
+      renderMatchList();
+
+      // ---- TRIVIA DEMO ----
+      const TRIVIA_QUESTIONS = [
+        { question: 'Which country has won the most World Cup titles?', options: ['Brazil', 'Germany', 'Italy', 'Argentina'], correct: 0, category: 'History', difficulty: 'Easy' },
+        { question: 'Who scored the most goals in a single World Cup tournament?', options: ['Ronaldo (Brazil)', 'Just Fontaine', 'Gerd Müller', 'Miroslav Klose'], correct: 1, category: 'Records', difficulty: 'Medium' },
+        { question: 'Which player has the most World Cup appearances?', options: ['Lionel Messi', 'Lothar Matthäus', 'Paolo Maldini', 'Cristiano Ronaldo'], correct: 1, category: 'Records', difficulty: 'Hard' },
+        { question: 'How many teams will participate in the 2026 World Cup?', options: ['32', '48', '36', '40'], correct: 1, category: 'Trivia', difficulty: 'Medium' },
+        { question: 'Which stadium will host the 2026 World Cup Final?', options: ['MetLife Stadium (NJ)', 'SoFi Stadium (LA)', 'AT&T Stadium (Dallas)', 'BC Place (Vancouver)'], correct: 0, category: 'Venues', difficulty: 'Medium' },
+        { question: 'Who is the all-time top scorer in World Cup history?', options: ['Ronaldo (Brazil)', 'Miroslav Klose', 'Pelé', 'Just Fontaine'], correct: 1, category: 'Records', difficulty: 'Easy' },
+        { question: 'Which North American nation has advanced furthest in a World Cup?', options: ['USA', 'Mexico', 'Canada', 'Costa Rica'], correct: 1, category: 'North America', difficulty: 'Medium' },
+        { question: 'What is the fastest goal scored in a World Cup match?', options: ['11 seconds', '8 seconds', '15 seconds', '5 seconds'], correct: 0, category: 'Records', difficulty: 'Hard' },
+      ];
+
+      let triviaIdx = 0;
+      let triviaScore = 0;
+      let triviaAnswered = false;
+      let triviaTimerInterval = null;
+      let triviaTimeLeft = 15;
+      const QUESTION_TIME = 15;
+
+      const triviaQuestionEl = document.getElementById('triviaQuestion');
+      const triviaOptionsEl = document.getElementById('triviaOptions');
+      const triviaTagEl = document.getElementById('triviaTag');
+      const triviaProgressEl = document.getElementById('triviaProgress');
+      const triviaScoreEl = document.getElementById('triviaScore');
+      const triviaTimerEl = document.getElementById('triviaTimer');
+      const triviaTimerBar = document.getElementById('triviaTimerBar');
+      const triviaFeedback = document.getElementById('triviaFeedback');
+      const triviaFeedbackContent = document.getElementById('triviaFeedbackContent');
+      const triviaNextBtn = document.getElementById('triviaNextBtn');
+      const triviaRestartBtn = document.getElementById('triviaRestartBtn');
+
+      // Shuffle trivia questions
+      const shuffledTrivia = [...TRIVIA_QUESTIONS].sort(() => Math.random() - 0.5).slice(0, 5);
+
+      function loadTriviaQuestion() {
+        if (triviaIdx >= shuffledTrivia.length) {
+          endTriviaGame();
+          return;
+        }
+        const q = shuffledTrivia[triviaIdx];
+        triviaQuestionEl.textContent = q.question;
+        triviaTagEl.textContent = `${q.category} • ${q.difficulty}`;
+        triviaProgressEl.textContent = `Question ${triviaIdx + 1} of ${shuffledTrivia.length}`;
+        triviaAnswered = false;
+        triviaNextBtn.classList.add('hidden');
+        triviaFeedback.classList.add('hidden');
+
+        // Render options
+        triviaOptionsEl.innerHTML = '';
+        q.options.forEach((opt, idx) => {
+          const btn = document.createElement('button');
+          btn.className = 'trivia-option w-full flex items-center gap-3 p-3.5 rounded-xl bg-slate-800/40 border border-slate-700/30 text-left';
+          btn.innerHTML = `
+            <span class="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-700/50 text-xs font-bold text-slate-300">${'ABCD'[idx]}</span>
+            <span class="text-sm text-slate-200 font-medium">${opt}</span>
+          `;
+          btn.addEventListener('click', () => answerTrivia(idx, btn));
+          triviaOptionsEl.appendChild(btn);
+        });
+
+        // Reset timer
+        triviaTimeLeft = QUESTION_TIME;
+        triviaTimerEl.textContent = `${triviaTimeLeft}s`;
+        triviaTimerBar.style.width = '100%';
+        triviaTimerBar.style.transition = 'none';
+        // Force reflow
+        void triviaTimerBar.offsetWidth;
+        triviaTimerBar.style.transition = `width ${QUESTION_TIME}s linear`;
+        triviaTimerBar.style.width = '0%';
+
+        clearInterval(triviaTimerInterval);
+        triviaTimerInterval = setInterval(() => {
+          triviaTimeLeft--;
+          triviaTimerEl.textContent = `${Math.max(0, triviaTimeLeft)}s`;
+          if (triviaTimeLeft <= 0) {
+            clearInterval(triviaTimerInterval);
+            if (!triviaAnswered) {
+              timeUpTrivia();
+            }
+          }
+        }, 1000);
+      }
+
+      function answerTrivia(idx, btn) {
+        if (triviaAnswered) return;
+        triviaAnswered = true;
+        clearInterval(triviaTimerInterval);
+
+        const q = shuffledTrivia[triviaIdx];
+        const correct = idx === q.correct;
+        const allBtns = triviaOptionsEl.querySelectorAll('button');
+
+        allBtns.forEach((b, i) => {
+          b.style.pointerEvents = 'none';
+          if (i === q.correct) {
+            b.className = 'trivia-option w-full flex items-center gap-3 p-3.5 rounded-xl border text-left bg-emerald-500/10 border-emerald-500/40';
+          } else if (i === idx && !correct) {
+            b.className = 'trivia-option w-full flex items-center gap-3 p-3.5 rounded-xl border text-left bg-red-500/10 border-red-500/40';
+          } else {
+            b.style.opacity = '0.5';
+          }
+        });
+
+        if (correct) {
+          triviaScore += 10;
+          triviaScoreEl.textContent = triviaScore;
+          triviaFeedbackContent.className = 'p-3 rounded-xl text-sm font-semibold text-center bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
+          triviaFeedbackContent.textContent = '✅ Correct! +10 points';
+          spawnConfetti();
+        } else {
+          triviaFeedbackContent.className = 'p-3 rounded-xl text-sm font-semibold text-center bg-red-500/10 text-red-400 border border-red-500/20';
+          triviaFeedbackContent.textContent = `❌ The correct answer was: ${q.options[q.correct]}`;
+        }
+
+        triviaFeedback.classList.remove('hidden');
+        triviaTimerBar.style.transition = 'none';
+
+        if (triviaIdx + 1 >= shuffledTrivia.length) {
+          triviaNextBtn.textContent = '🎉 View Results';
+        } else {
+          triviaNextBtn.textContent = 'Next Question →';
+        }
+        triviaNextBtn.classList.remove('hidden');
+      }
+
+      function timeUpTrivia() {
+        const q = shuffledTrivia[triviaIdx];
+        const allBtns = triviaOptionsEl.querySelectorAll('button');
+        allBtns.forEach((b, i) => {
+          b.style.pointerEvents = 'none';
+          if (i === q.correct) {
+            b.className = 'trivia-option w-full flex items-center gap-3 p-3.5 rounded-xl border text-left bg-emerald-500/10 border-emerald-500/40';
+          } else {
+            b.style.opacity = '0.5';
+          }
+        });
+        triviaFeedbackContent.className = 'p-3 rounded-xl text-sm font-semibold text-center bg-hype-500/10 text-hype-400 border border-hype-500/20';
+        triviaFeedbackContent.textContent = '⏰ Time is up!';
+        triviaFeedback.classList.remove('hidden');
+        if (triviaIdx + 1 >= shuffledTrivia.length) {
+          triviaNextBtn.textContent = '🎉 View Results';
+        } else {
+          triviaNextBtn.textContent = 'Next Question →';
+        }
+        triviaNextBtn.classList.remove('hidden');
+      }
+
+      triviaNextBtn.addEventListener('click', () => {
+        triviaIdx++;
+        loadTriviaQuestion();
+      });
+
+      function endTriviaGame() {
+        clearInterval(triviaTimerInterval);
+        triviaQuestionEl.textContent = '🏆 Trivia Complete!';
+        triviaTagEl.textContent = 'FINAL SCORE';
+        triviaOptionsEl.innerHTML = '';
+        triviaFeedback.classList.add('hidden');
+        triviaNextBtn.classList.add('hidden');
+        triviaRestartBtn.classList.remove('hidden');
+        triviaTimerEl.textContent = '--';
+        triviaTimerBar.style.width = '0%';
+        // Show results message
+        const resultDiv = document.createElement('div');
+        resultDiv.className = 'p-6 text-center';
+        let message = '';
+        if (triviaScore >= 40) message = '🌟 World Cup Champion!';
+        else if (triviaScore >= 30) message = '👏 Great knowledge!';
+        else if (triviaScore >= 20) message = '👍 Not bad!';
+        else message = '📚 Keep practicing!';
+        resultDiv.innerHTML = `
+          <p class="text-4xl font-black text-emerald-400 mb-2">${triviaScore}</p>
+          <p class="text-sm text-slate-400">Total Points</p>
+          <p class="text-lg font-semibold text-white mt-3">${message}</p>
+          <p class="text-xs text-slate-500 mt-2">Points contributed to your subreddit leaderboard!</p>
+        `;
+        triviaOptionsEl.appendChild(resultDiv);
+      }
+
+      triviaRestartBtn.addEventListener('click', () => {
+        triviaIdx = 0;
+        triviaScore = 0;
+        triviaScoreEl.textContent = '0';
+        triviaRestartBtn.classList.add('hidden');
+        const shuffled = [...TRIVIA_QUESTIONS].sort(() => Math.random() - 0.5).slice(0, 5);
+        shuffledTrivia.length = 0;
+        shuffledTrivia.push(...shuffled);
+        loadTriviaQuestion();
+      });
+
+      function spawnConfetti() {
+        const colors = ['#22c55e', '#10b981', '#34d399', '#fbbf24', '#f97316', '#ef4444', '#8b5cf6', '#06b6d4'];
+        for (let i = 0; i < 20; i++) {
+          const piece = document.createElement('div');
+          piece.className = 'confetti-piece';
+          piece.style.left = Math.random() * 100 + 'vw';
+          piece.style.top = '-10vh';
+          piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+          piece.style.width = (Math.random() * 8 + 4) + 'px';
+          piece.style.height = (Math.random() * 8 + 4) + 'px';
+          piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+          piece.style.setProperty('--fall-duration', (Math.random() * 2 + 2) + 's');
+          piece.style.animationDelay = Math.random() * 0.5 + 's';
+          document.body.appendChild(piece);
+          setTimeout(() => piece.remove(), 4000);
+        }
+      }
+
+      // Start trivia on page load
+      loadTriviaQuestion();
+
+      // ---- HYPE-METER INTERACTIVE ----
+      const hypeMatchList = document.getElementById('hypeMatchList');
+      let selectedHypeMatch = MATCHES[0];
+
+      function renderHypeMatchList() {
+        hypeMatchList.innerHTML = '';
+        MATCHES.forEach((match) => {
+          const btn = document.createElement('button');
+          btn.className = `w-full flex items-center gap-2 p-2.5 rounded-xl text-left transition-all duration-200 ${
+            selectedHypeMatch.id === match.id
+              ? 'bg-emerald-500/10 border border-emerald-500/30'
+              : 'bg-slate-800/20 border border-transparent hover:bg-slate-800/40'
+          }`;
+          btn.innerHTML = `
+            <span>${getFlag(match.home)} ${getFlag(match.away)}</span>
+            <span class="text-sm text-white font-medium truncate flex-1">${match.home} vs ${match.away}</span>
+            <span class="text-xs font-mono ${match.hype >= 80 ? 'text-red-400' : match.hype >= 60 ? 'text-hype-400' : 'text-slate-500'}">${match.hype}</span>
+          `;
+          btn.addEventListener('click', () => {
+            selectedHypeMatch = match;
+            updateHypeDashboard(match);
+            renderHypeMatchList();
+          });
+          hypeMatchList.appendChild(btn);
+        });
+      }
+
+      function updateHypeDashboard(match) {
+        document.getElementById('hypeMatchTitle').textContent = `${match.home} vs ${match.away}`;
+        document.getElementById('hypeMatchStatus').textContent = match.status.toUpperCase();
+        document.getElementById('hypeScore').textContent = match.hype;
+        document.getElementById('hypeBar').style.width = match.hype + '%';
+        document.getElementById('hypeComments').textContent = match.comments.toLocaleString();
+        document.getElementById('hypePositive').textContent = match.positive + '%';
+        document.getElementById('hypeNegative').textContent = match.negative + '%';
+        document.getElementById('sentimentPositive').style.width = match.positive + '%';
+        const neutral = 100 - match.positive - match.negative;
+        document.getElementById('sentimentNeutral').style.width = neutral + '%';
+        document.getElementById('sentimentNegative').style.width = match.negative + '%';
+        document.getElementById('hypeSummary').textContent = match.summary;
+
+        let label = '';
+        if (match.hype >= 80) label = '🔥 ON FIRE!';
+        else if (match.hype >= 60) label = '⚡ HYPED!';
+        else if (match.hype >= 40) label = '👍 Warming Up';
+        else label = '💤 Quiet';
+        document.getElementById('hypeLabel').textContent = label;
+
+        // Keywords
+        const kwContainer = document.getElementById('hypeKeywords');
+        kwContainer.innerHTML = '';
+        match.keywords.forEach((kw) => {
+          const span = document.createElement('span');
+          span.className = 'px-3 py-1.5 rounded-full bg-slate-800/60 text-xs text-slate-300 border border-slate-700/30 hover:border-emerald-500/30 hover:text-emerald-400 transition-all cursor-default';
+          span.textContent = '#' + kw;
+          kwContainer.appendChild(span);
+        });
+      }
+
+      renderHypeMatchList();
+      updateHypeDashboard(MATCHES[0]);
+
+      // ---- SMOOTH SCROLL FOR NAV ----
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href === '#') return;
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+
+    })();
+  </script>
+</body>
+</html>
